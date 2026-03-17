@@ -23,13 +23,13 @@
     "process": {
       "intro": {
         "eyebrow": "How it works",
-        "title": "A cleaner path from campaign brief to creator connection.",
+        "title": "A cleaner path from campaign to creator connection.",
         "description": "UGC Hits helps software brands move from idea to shortlist without relying on cold outreach, generic marketplaces, or noisy applicant pools."
       },
       "steps": [
         {
           "step": "Step 1",
-          "title": "Post your campaign brief",
+          "title": "Post your campaign",
           "description": "Share what you are promoting, who you want to reach, and what kind of creator you need. Brands can define niche, budget, deliverables, audience, and creative direction before the campaign goes live.",
           "bullets": [
             "Define the product and campaign goal",
@@ -110,7 +110,7 @@
       "items": [
         {
           "title": "High-signal applications only",
-          "description": "We prioritize fit over volume. Skip the noise and only review creators who actually match your brief and understand your niche."
+          "description": "We prioritize fit over volume. Skip the noise and only review creators who actually match your campaign and understand your niche."
         },
         {
           "title": "Vetted creator network",
@@ -130,7 +130,7 @@
         },
         {
           "title": "Quality over volume",
-          "description": "The goal is not to flood you with applications. The goal is to surface creators who make sense for the brief."
+          "description": "The goal is not to flood you with applications. The goal is to surface creators who make sense for the campaign."
         }
       ]
     },
@@ -210,13 +210,13 @@
       {
         "name": "Ari M.",
         "role": "SaaS explainer creator",
-        "tag": "100% brief fit",
+        "tag": "100% fit",
         "detail": "Strong hook writing and app onboarding walkthroughs."
       },
       {
         "name": "Nina C.",
         "role": "Lifestyle-tech storyteller",
-        "tag": "92% brief fit",
+        "tag": "90% fit",
         "detail": "Comfortable posting for early-stage products."
       },
       {

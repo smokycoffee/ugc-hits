@@ -23,13 +23,13 @@
     "process": {
       "intro": {
         "eyebrow": "Jak to działa",
-        "title": "Prostsza droga od briefu kampanii do kontaktu z twórcą.",
+        "title": "Prostsza droga od kampanii do kontaktu z twórcą.",
         "description": "UGC Hits pomaga markom software przejść od pomysłu do shortlisty bez cold outreachu, generycznych marketplace’ów i przypadkowych zgłoszeń."
       },
       "steps": [
         {
           "step": "Krok 1",
-          "title": "Dodaj brief kampanii",
+          "title": "Dodaj kampanii",
           "description": "Opisz, co promujesz, do kogo chcesz dotrzeć i jakiego twórcy szukasz. Marka może określić niszę, budżet, deliverables, grupę docelową i kierunek kreatywny przed publikacją kampanii.",
           "bullets": [
             "Określ produkt i cel kampanii",
@@ -110,7 +110,7 @@
       "items": [
         {
           "title": "Tylko zgłoszenia wysokiej jakości",
-          "description": "Stawiamy na dopasowanie, nie na ilość. Omiń szum i przeglądaj tylko twórców, którzy naprawdę pasują do briefu i rozumieją Twoją niszę."
+          "description": "Stawiamy na dopasowanie, nie na ilość. Omiń szum i przeglądaj tylko twórców, którzy naprawdę pasują do kampanii i rozumieją Twoją niszę."
         },
         {
           "title": "Zweryfikowana sieć twórców",
@@ -216,7 +216,7 @@
       {
         "name": "Nina C.",
         "role": "Lifestyle-tech storyteller",
-        "tag": "92% dopasowania",
+        "tag": "90% dopasowania",
         "detail": "Dobrze sprawdza się przy promocji produktów na wczesnym etapie."
       },
       {

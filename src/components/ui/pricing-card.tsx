@@ -64,7 +64,7 @@ export function PricingCard({
         ))}
       </ul>
 
-      <div className="mt-8">
+      <div className="mt-auto pt-8">
         <button
           type="button"
           className={cn(
