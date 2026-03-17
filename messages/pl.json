@@ -1,0 +1,236 @@
+{
+  "Landing": {
+    "brand": "UGC Hits",
+    "nav": {
+      "howItWorks": "Jak to działa",
+      "pricing": "Cennik",
+      "why": "Dlaczego UGC Hits",
+      "faq": "FAQ"
+    },
+    "hero": {
+      "eyebrow": "Wyselekcjonowani twórcy UGC do kampanii aplikacji",
+      "title": "Znajdź wyróżniających się twórców do swojej kolejnej kampanii aplikacji.",
+      "description": "Pomiń cold outreach i przejdź od razu do sprawdzonych twórców, którzy rozumieją produkty cyfrowe, krótkie formaty i treści nastawione na konwersję.",
+      "primaryCta": "Dodaj kampanię",
+      "secondaryCta": "Zobacz jak to działa",
+      "supportingNote": "Stworzone dla marek software, które chcą lepszego dopasowania twórców, mniej szumu i szybszego startu kampanii.",
+      "proof": [
+        "Zweryfikowana sieć twórców",
+        "Zgłoszenia dopasowane do briefu",
+        "Bezpośrednie wiadomości do twórców"
+      ]
+    },
+    "process": {
+      "intro": {
+        "eyebrow": "Jak to działa",
+        "title": "Prostsza droga od briefu kampanii do kontaktu z twórcą.",
+        "description": "UGC Hits pomaga markom software przejść od pomysłu do shortlisty bez cold outreachu, generycznych marketplace’ów i przypadkowych zgłoszeń."
+      },
+      "steps": [
+        {
+          "step": "Krok 1",
+          "title": "Dodaj brief kampanii",
+          "description": "Opisz, co promujesz, do kogo chcesz dotrzeć i jakiego twórcy szukasz. Marka może określić niszę, budżet, deliverables, grupę docelową i kierunek kreatywny przed publikacją kampanii.",
+          "bullets": [
+            "Określ produkt i cel kampanii",
+            "Ustal dopasowanie twórcy, budżet i deliverables",
+            "Uruchom jedną kampanię za jedną opłatą"
+          ]
+        },
+        {
+          "step": "Krok 2",
+          "title": "Przejrzyj kwalifikowane zgłoszenia",
+          "description": "Przeglądaj twórców, którzy zgłosili się przez platformę, i porównuj sygnały, które naprawdę mają znaczenie: styl contentu, niszę, mocne platformy, profil odbiorców i ogólne dopasowanie do kampanii.",
+          "bullets": [
+            "Ustrukturyzowane profile twórców",
+            "Lepsza jakość zgłoszeń",
+            "Szybszy shortlist dla zespołu marki"
+          ]
+        },
+        {
+          "step": "Krok 3",
+          "title": "Połącz się i rusz dalej",
+          "description": "Kiedy znajdziesz odpowiednie dopasowanie, możesz napisać do twórców bezpośrednio na platformie i ustalić kolejne kroki. UGC Hits ma pomagać szybciej zacząć współpracę, a nie ją komplikować.",
+          "bullets": [
+            "Bezpośrednie wiadomości na platformie",
+            "Płynne przejście od sourcingu do realizacji",
+            "Opcjonalne wsparcie przy większych kampaniach"
+          ]
+        }
+      ],
+      "matching": {
+        "eyebrow": "Jak to działa w praktyce",
+        "title": "Liczy się dopasowanie, nie sama liczba twórców.",
+        "description": "UGC Hits jest zbudowane wokół jakości kampanii. Twórcy są weryfikowani przed dołączeniem, a kampanie trafiają do osób, których profil pasuje do produktu, odbiorcy i stylu treści, którego potrzebujesz.",
+        "signalLabel": "Sygnał dopasowania",
+        "tags": [
+          "Doświadczenie w UGC dla aplikacji i software",
+          "Krótkie formaty produktowe",
+          "Lepsza widoczność dla właściwych twórców"
+        ]
+      }
+    },
+    "pricing": {
+      "eyebrow": "Cennik",
+      "title": "Dwa sposoby, aby ruszyć z kampanią.",
+      "description": "Zacznij od jednorazowej publikacji kampanii albo wybierz wsparcie managed, jeśli potrzebujesz bardziej kompleksowej obsługi.",
+      "popular": "Najczęściej wybierane",
+      "plans": [
+        {
+          "name": "Sourcing twórców UGC",
+          "price": "399 PLN",
+          "cadence": "Jednorazowa opłata za kampanię",
+          "description": "Dodaj jedną kampanię, otrzymuj kwalifikowane zgłoszenia z naszej zweryfikowanej sieci i kontaktuj się bezpośrednio z twórcami, z którymi chcesz działać dalej.",
+          "features": [
+            "Jedna aktywna kampania",
+            "Weryfikacja kampanii przed publikacją",
+            "Kwalifikowane zgłoszenia twórców",
+            "Bezpośrednie wiadomości na platformie"
+          ],
+          "cta": "Rozpocznij kampanię"
+        },
+        {
+          "name": "Managed Campaign Support",
+          "price": "Indywidualnie",
+          "cadence": "Wycena indywidualna",
+          "description": "Dla marek, które chcą wsparcia w sourcingu twórców, komunikacji i koordynacji kampanii od początku do końca.",
+          "features": [
+            "Strategiczne przygotowanie kampanii",
+            "Wsparcie w sourcingu twórców",
+            "Komunikacja i koordynacja",
+            "Nadzór nad deliverables i workflow"
+          ],
+          "cta": "Skontaktuj się"
+        }
+      ]
+    },
+    "features": {
+      "eyebrow": "Dlaczego UGC Hits",
+      "title": "Stworzone dla marek software, które potrzebują lepszego sourcingu twórców.",
+      "items": [
+        {
+          "title": "Tylko zgłoszenia wysokiej jakości",
+          "description": "Stawiamy na dopasowanie, nie na ilość. Omiń szum i przeglądaj tylko twórców, którzy naprawdę pasują do briefu i rozumieją Twoją niszę."
+        },
+        {
+          "title": "Zweryfikowana sieć twórców",
+          "description": "Twórcy są sprawdzani przed dołączeniem, co pomaga utrzymać wyższą jakość całej sieci."
+        },
+        {
+          "title": "Dla produktów cyfrowych",
+          "description": "UGC Hits jest dopasowane do aplikacji, SaaS, narzędzi software i marek produktowych, a nie do szerokiego ecommerce."
+        },
+        {
+          "title": "Czytelniejszy workflow review",
+          "description": "Marki przeglądają uporządkowane profile twórców zamiast składać informacje z DM-ów, arkuszy i różnych platform."
+        },
+        {
+          "title": "Bezpośredni kontakt z twórcami",
+          "description": "Gdy jest dopasowanie, marka może szybko rozpocząć rozmowę i pchnąć kampanię dalej bez zbędnych przeszkód."
+        },
+        {
+          "title": "Jakość ponad ilość",
+          "description": "Celem nie jest zasypanie Cię zgłoszeniami. Chodzi o pokazanie twórców, którzy naprawdę mają sens dla kampanii."
+        }
+      ]
+    },
+    "founder": {
+      "eyebrow": "Creator-led",
+      "title": "Zbudowane z perspektywy twórcy, który rozumie potrzeby marek.",
+      "name": "Jed Caluag",
+      "location": "New York, NY",
+      "summary": [
+        "UGC Hits powstało z założenia, że sourcing twórców działa lepiej, kiedy jakość, dopasowanie i zrozumienie produktu są na pierwszym miejscu.",
+        "Ta perspektywa wpływa na to, jak kampanie są oceniane, jak twórcy są dobierani i jak marki przechodzą od sourcingu do realizacji bez tracenia czasu."
+      ],
+      "socials": ["Instagram", "TikTok", "YouTube", "X"]
+    },
+    "faq": {
+      "title": "Pytania, które marki zadają przed publikacją kampanii",
+      "items": [
+        {
+          "question": "Czym jest UGC Hits?",
+          "answer": "UGC Hits to platforma do sourcingu twórców UGC dla kampanii aplikacji, software i produktów cyfrowych."
+        },
+        {
+          "question": "Dla kogo jest UGC Hits?",
+          "answer": "UGC Hits jest stworzone dla marek software, aplikacji konsumenckich, SaaS, startupów i produktów cyfrowych, które chcą lepszego sourcingu twórców bez cold outreachu."
+        },
+        {
+          "question": "Jak działa pricing?",
+          "answer": "Plan self-serve to jednorazowa opłata za jedną kampanię. Marki mogą też wybrać indywidualny plan managed support z bardziej kompleksową obsługą."
+        },
+        {
+          "question": "Jak wybierani są twórcy?",
+          "answer": "Twórcy są weryfikowani przed dołączeniem do platformy. Liczy się jakość profilu, dopasowanie do niszy, umiejętność tworzenia krótkich formatów i ogólne dopasowanie do sieci."
+        },
+        {
+          "question": "Co dzieje się, gdy znajdę właściwych twórców?",
+          "answer": "Gdy pojawi się dopasowanie, możesz napisać do twórców bezpośrednio na platformie i ustalić kolejne kroki kampanii."
+        },
+        {
+          "question": "Co jeśli nie dostanę żadnych zgłoszeń?",
+          "answer": "Każda kampania jest oceniana przed publikacją i akceptujemy tylko te, które naszym zdaniem dobrze pasują do sieci. Jeśli kampania nie przyciągnie odpowiednich zgłoszeń, oferujemy gwarancję zwrotu."
+        }
+      ]
+    },
+    "footer": {
+      "platformTitle": "Platforma",
+      "audienceTitle": "Dla kogo",
+      "note": "Wyselekcjonowany sourcing twórców dla marek software.",
+      "links": {
+        "howItWorks": "Jak to działa",
+        "pricing": "Cennik",
+        "faq": "FAQ",
+        "forBrands": "Dla marek",
+        "managedSupport": "Managed Support"
+      },
+      "copyright": "© 2026 UGC Hits. Wszelkie prawa zastrzeżone."
+    },
+    "stats": [
+      {"label": "Zweryfikowani twórcy", "value": "150+"},
+      {"label": "Nisze produktowe", "value": "22"},
+      {"label": "Czas do shortlisty", "value": "48h"}
+    ],
+    "creatorCards": [
+      {
+        "name": "Ari M.",
+        "role": "Twórca explainerów SaaS",
+        "tag": "100% dopasowania",
+        "detail": "Mocne hooki i walkthroughy onboardingowe dla aplikacji."
+      },
+      {
+        "name": "Nina C.",
+        "role": "Lifestyle-tech storyteller",
+        "tag": "92% dopasowania",
+        "detail": "Dobrze sprawdza się przy promocji produktów na wczesnym etapie."
+      },
+      {
+        "name": "Leo T.",
+        "role": "Twórca i montażysta UGC",
+        "tag": "Gotowy na nowe konta",
+        "detail": "Szybka realizacja treści do testów paid social."
+      }
+    ],
+    "socialProof": [
+      "Zaufanie marek software-first",
+      "Struktura dopasowana do founder-led brands",
+      "Jakość twórców ponad ilość zgłoszeń"
+    ],
+    "featureChips": [
+      {"label": "Zweryfikowani"},
+      {"label": "Dopasowani"},
+      {"label": "Gotowi do kontaktu"},
+      {"label": "Tech-first"},
+      {"label": "Creator-led"},
+      {"label": "Gwarancja zwrotu"}
+    ],
+    "audienceRibbon": {
+      "title": "Dla zespołów aplikacji, growth marketerów i marek produktowych."
+    }
+  },
+  "LocaleSwitcher": {
+    "pl": "PL",
+    "en": "EN"
+  }
+}

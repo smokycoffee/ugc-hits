@@ -1,0 +1,236 @@
+{
+  "Landing": {
+    "brand": "UGC Hits",
+    "nav": {
+      "howItWorks": "How it works",
+      "pricing": "Pricing",
+      "why": "Why UGC Hits",
+      "faq": "FAQ"
+    },
+    "hero": {
+      "eyebrow": "Vetted creator sourcing for app campaigns",
+      "title": "Find standout creators for your next app campaign.",
+      "description": "Skip cold outreach and move straight to qualified creators who already understand digital products, short-form hooks, and conversion-focused content.",
+      "primaryCta": "Post Your Campaign",
+      "secondaryCta": "See How It Works",
+      "supportingNote": "Built for software brands that want better creator fit, less noise, and faster campaign momentum.",
+      "proof": [
+        "Vetted creator network",
+        "Campaign-fit applicants",
+        "Direct creator messaging"
+      ]
+    },
+    "process": {
+      "intro": {
+        "eyebrow": "How it works",
+        "title": "A cleaner path from campaign brief to creator connection.",
+        "description": "UGC Hits helps software brands move from idea to shortlist without relying on cold outreach, generic marketplaces, or noisy applicant pools."
+      },
+      "steps": [
+        {
+          "step": "Step 1",
+          "title": "Post your campaign brief",
+          "description": "Share what you are promoting, who you want to reach, and what kind of creator you need. Brands can define niche, budget, deliverables, audience, and creative direction before the campaign goes live.",
+          "bullets": [
+            "Define the product and campaign goal",
+            "Set creator fit, budget, and deliverables",
+            "Launch one campaign with one listing fee"
+          ]
+        },
+        {
+          "step": "Step 2",
+          "title": "Review qualified applicants",
+          "description": "Review creators who apply through the platform and compare the signals that matter: content style, niche, platform strengths, audience profile, and overall fit for the campaign.",
+          "bullets": [
+            "Structured creator profiles",
+            "Higher-signal applicant review",
+            "Faster shortlisting for brand teams"
+          ]
+        },
+        {
+          "step": "Step 3",
+          "title": "Connect and move forward",
+          "description": "Once you find the right fit, message creators directly on the platform and coordinate the next step. UGC Hits is built to help the relationship start quickly and cleanly.",
+          "bullets": [
+            "Direct in-platform messaging",
+            "Clean handoff from sourcing to execution",
+            "Optional managed support for larger campaigns"
+          ]
+        }
+      ],
+      "matching": {
+        "eyebrow": "Under the hood",
+        "title": "We focus on fit, not just creator volume.",
+        "description": "UGC Hits is designed around campaign quality. Creators are reviewed before joining, and campaigns are surfaced to creators whose profiles align with the product, audience, and content style you need.",
+        "signalLabel": "Match signal",
+        "tags": [
+          "Tech and app UGC experience",
+          "Short-form product storytelling",
+          "Qualified creator visibility"
+        ]
+      }
+    },
+    "pricing": {
+      "eyebrow": "Pricing",
+      "title": "Two ways to get your campaign moving.",
+      "description": "Start with a one-time campaign listing or choose managed support if you want a more hands-on execution partner.",
+      "popular": "Most popular",
+      "plans": [
+        {
+          "name": "UGC Creator Sourcing",
+          "price": "399 PLN",
+          "cadence": "One-time listing fee",
+          "description": "Post one campaign, receive qualified applicants from our vetted network, and connect directly with the creators you want to move forward with.",
+          "features": [
+            "One live campaign listing",
+            "Campaign reviewed before launch",
+            "Qualified creator applicants",
+            "Direct platform messaging"
+          ],
+          "cta": "Start Your Campaign"
+        },
+        {
+          "name": "Managed Campaign Support",
+          "price": "Custom",
+          "cadence": "Custom pricing",
+          "description": "For brands that want help with creator sourcing, communication, and campaign coordination from start to finish.",
+          "features": [
+            "Strategic campaign setup",
+            "Creator sourcing support",
+            "Communication and coordination",
+            "Deliverable and workflow oversight"
+          ],
+          "cta": "Get in Touch"
+        }
+      ]
+    },
+    "features": {
+      "eyebrow": "Why UGC Hits",
+      "title": "Built for software brands that need better creator sourcing.",
+      "items": [
+        {
+          "title": "High-signal applications only",
+          "description": "We prioritize fit over volume. Skip the noise and only review creators who actually match your brief and understand your niche."
+        },
+        {
+          "title": "Vetted creator network",
+          "description": "Creators are reviewed before joining, which helps keep quality higher across the network."
+        },
+        {
+          "title": "Built for digital products",
+          "description": "UGC Hits is tailored for apps, SaaS, software tools, and product-led brands rather than broad ecommerce sourcing."
+        },
+        {
+          "title": "Cleaner review workflow",
+          "description": "Brands review structured creator information instead of stitching together DMs, spreadsheets, and platform searches."
+        },
+        {
+          "title": "Direct creator messaging",
+          "description": "Once there is a fit, brands can start the conversation and move the campaign forward without unnecessary friction."
+        },
+        {
+          "title": "Quality over volume",
+          "description": "The goal is not to flood you with applications. The goal is to surface creators who make sense for the brief."
+        }
+      ]
+    },
+    "founder": {
+      "eyebrow": "Creator-led",
+      "title": "Built with a creator’s understanding of what brands actually need.",
+      "name": "Jed Caluag",
+      "location": "New York, NY",
+      "summary": [
+        "UGC Hits is shaped around the belief that creator sourcing works better when quality, fit, and product understanding come first.",
+        "That creator-led perspective informs how campaigns are reviewed, how creators are surfaced, and how brands move from sourcing to execution with less wasted time."
+      ],
+      "socials": ["Instagram", "TikTok", "YouTube", "X"]
+    },
+    "faq": {
+      "title": "Questions brands ask before they post",
+      "items": [
+        {
+          "question": "What is UGC Hits?",
+          "answer": "UGC Hits is a curated creator sourcing platform for app, software, and digital product campaigns."
+        },
+        {
+          "question": "Who is UGC Hits for?",
+          "answer": "UGC Hits is built for software brands, consumer apps, SaaS companies, startups, and digital products that want stronger UGC creator sourcing without relying on cold outreach."
+        },
+        {
+          "question": "How does pricing work?",
+          "answer": "The self-serve plan is a one-time listing fee for one campaign. Brands can also choose a custom managed support plan for more hands-on help."
+        },
+        {
+          "question": "How are creators selected?",
+          "answer": "Creators are reviewed before joining the platform. Profile quality, niche relevance, short-form content ability, and overall fit for the network all matter."
+        },
+        {
+          "question": "What happens after I find the right creators?",
+          "answer": "Once there is a fit, you can message creators directly on the platform and coordinate the next steps of the campaign from there."
+        },
+        {
+          "question": "What if I get no applicants?",
+          "answer": "Every campaign is reviewed before launch, and we only approve campaigns we believe are a strong fit for our network. If your campaign does not attract the right applicants, we offer a money-back guarantee."
+        }
+      ]
+    },
+    "footer": {
+      "platformTitle": "Platform",
+      "audienceTitle": "Audience",
+      "note": "Curated creator sourcing for software brands.",
+      "links": {
+        "howItWorks": "How it works",
+        "pricing": "Pricing",
+        "faq": "FAQ",
+        "forBrands": "For Brands",
+        "managedSupport": "Managed Support"
+      },
+      "copyright": "© 2026 UGC Hits. All rights reserved."
+    },
+    "stats": [
+      {"label": "Curated creators", "value": "150+"},
+      {"label": "Product niches", "value": "22"},
+      {"label": "Campaign handoffs", "value": "48h"}
+    ],
+    "creatorCards": [
+      {
+        "name": "Ari M.",
+        "role": "SaaS explainer creator",
+        "tag": "100% brief fit",
+        "detail": "Strong hook writing and app onboarding walkthroughs."
+      },
+      {
+        "name": "Nina C.",
+        "role": "Lifestyle-tech storyteller",
+        "tag": "92% brief fit",
+        "detail": "Comfortable posting for early-stage products."
+      },
+      {
+        "name": "Leo T.",
+        "role": "UGC editor and creator",
+        "tag": "New account ready",
+        "detail": "Fast-turn creator for paid social testing."
+      }
+    ],
+    "socialProof": [
+      "Trusted by software-first teams",
+      "Structured for founder-led brands",
+      "Built around creator quality over volume"
+    ],
+    "featureChips": [
+      {"label": "Vetted"},
+      {"label": "Matched"},
+      {"label": "Messaging-ready"},
+      {"label": "Tech-first"},
+      {"label": "Creator-led"},
+      {"label": "Money-back guarantee"}
+    ],
+    "audienceRibbon": {
+      "title": "Made for app teams, growth marketers, and product-led brands."
+    }
+  },
+  "LocaleSwitcher": {
+    "pl": "PL",
+    "en": "EN"
+  }
+}
