@@ -106,7 +106,7 @@
     },
     "features": {
       "eyebrow": "Dlaczego UGC Hits",
-      "title": "Stworzone dla marek software, które potrzebują lepszego sourcingu twórców.",
+      "title": "Stworzone dla marek tech szukających lepszego sourcingu twórców.",
       "items": [
         {
           "title": "Tylko zgłoszenia wysokiej jakości",
@@ -117,20 +117,8 @@
           "description": "Twórcy są sprawdzani przed dołączeniem, co pomaga utrzymać wyższą jakość całej sieci."
         },
         {
-          "title": "Dla produktów cyfrowych",
-          "description": "UGC Hits jest dopasowane do aplikacji, SaaS, narzędzi software i marek produktowych, a nie do szerokiego ecommerce."
-        },
-        {
           "title": "Czytelniejszy workflow review",
           "description": "Marki przeglądają uporządkowane profile twórców zamiast składać informacje z DM-ów, arkuszy i różnych platform."
-        },
-        {
-          "title": "Bezpośredni kontakt z twórcami",
-          "description": "Gdy jest dopasowanie, marka może szybko rozpocząć rozmowę i pchnąć kampanię dalej bez zbędnych przeszkód."
-        },
-        {
-          "title": "Jakość ponad ilość",
-          "description": "Celem nie jest zasypanie Cię zgłoszeniami. Chodzi o pokazanie twórców, którzy naprawdę mają sens dla kampanii."
         }
       ]
     },
@@ -208,19 +196,19 @@
     ],
     "creatorCards": [
       {
-        "name": "Ari M.",
+        "name": "Julia",
         "role": "Twórca explainerów SaaS",
         "tag": "100% dopasowania",
         "detail": "Mocne hooki i walkthroughy onboardingowe dla aplikacji."
       },
       {
-        "name": "Nina C.",
+        "name": "Dawid",
         "role": "Lifestyle-tech storyteller",
         "tag": "90% dopasowania",
         "detail": "Dobrze sprawdza się przy promocji produktów na wczesnym etapie."
       },
       {
-        "name": "Leo T.",
+        "name": "Weronika",
         "role": "Twórca i montażysta UGC",
         "tag": "Gotowy na nowe konta",
         "detail": "Szybka realizacja treści do testów paid social."

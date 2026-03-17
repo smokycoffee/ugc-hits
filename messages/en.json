@@ -106,7 +106,7 @@
     },
     "features": {
       "eyebrow": "Why UGC Hits",
-      "title": "Built for software brands that need better creator sourcing.",
+      "title": "Built for tech brands looking for better creator sourcing.",
       "items": [
         {
           "title": "High-signal applications only",
@@ -117,20 +117,8 @@
           "description": "Creators are reviewed before joining, which helps keep quality higher across the network."
         },
         {
-          "title": "Built for digital products",
-          "description": "UGC Hits is tailored for apps, SaaS, software tools, and product-led brands rather than broad ecommerce sourcing."
-        },
-        {
           "title": "Cleaner review workflow",
           "description": "Brands review structured creator information instead of stitching together DMs, spreadsheets, and platform searches."
-        },
-        {
-          "title": "Direct creator messaging",
-          "description": "Once there is a fit, brands can start the conversation and move the campaign forward without unnecessary friction."
-        },
-        {
-          "title": "Quality over volume",
-          "description": "The goal is not to flood you with applications. The goal is to surface creators who make sense for the campaign."
         }
       ]
     },
@@ -208,19 +196,19 @@
     ],
     "creatorCards": [
       {
-        "name": "Ari M.",
+        "name": "Julia",
         "role": "SaaS explainer creator",
         "tag": "100% fit",
         "detail": "Strong hook writing and app onboarding walkthroughs."
       },
       {
-        "name": "Nina C.",
+        "name": "Dawid",
         "role": "Lifestyle-tech storyteller",
         "tag": "90% fit",
         "detail": "Comfortable posting for early-stage products."
       },
       {
-        "name": "Leo T.",
+        "name": "Weronika",
         "role": "UGC editor and creator",
         "tag": "New account ready",
         "detail": "Fast-turn creator for paid social testing."
