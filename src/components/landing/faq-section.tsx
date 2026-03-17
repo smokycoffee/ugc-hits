@@ -12,7 +12,7 @@ type FaqSectionProps = {
 
 export function FaqSection({ faq }: FaqSectionProps) {
   return (
-    <section id={faq.id} className="px-4 py-20 md:px-6">
+    <section id={faq.id} className="scroll-mt-5 px-4 py-20 md:scroll-mt-10 md:px-6">
       <div className="mx-auto max-w-4xl">
         <div className="text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-teal-700">

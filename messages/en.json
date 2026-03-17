@@ -137,13 +137,18 @@
     "founder": {
       "eyebrow": "Creator-led",
       "title": "Built with a creator’s understanding of what brands actually need.",
-      "name": "Jed Caluag",
-      "location": "New York, NY",
+      "name": "Tsenguun",
+      "location": "Warsaw, Poland",
       "summary": [
         "UGC Hits is shaped around the belief that creator sourcing works better when quality, fit, and product understanding come first.",
         "That creator-led perspective informs how campaigns are reviewed, how creators are surfaced, and how brands move from sourcing to execution with less wasted time."
       ],
-      "socials": ["Instagram", "TikTok", "YouTube", "X"]
+      "socials": [
+        "Instagram",
+        "TikTok",
+        "YouTube",
+        "X"
+      ]
     },
     "faq": {
       "title": "Questions brands ask before they post",
@@ -188,9 +193,18 @@
       "copyright": "© 2026 UGC Hits. All rights reserved."
     },
     "stats": [
-      {"label": "Curated creators", "value": "150+"},
-      {"label": "Product niches", "value": "22"},
-      {"label": "Campaign handoffs", "value": "48h"}
+      {
+        "label": "Curated creators",
+        "value": "150+"
+      },
+      {
+        "label": "Product niches",
+        "value": "22"
+      },
+      {
+        "label": "Campaign handoffs",
+        "value": "48h"
+      }
     ],
     "creatorCards": [
       {
@@ -218,12 +232,24 @@
       "Built around creator quality over volume"
     ],
     "featureChips": [
-      {"label": "Vetted"},
-      {"label": "Matched"},
-      {"label": "Messaging-ready"},
-      {"label": "Tech-first"},
-      {"label": "Creator-led"},
-      {"label": "Money-back guarantee"}
+      {
+        "label": "Vetted"
+      },
+      {
+        "label": "Matched"
+      },
+      {
+        "label": "Messaging-ready"
+      },
+      {
+        "label": "Tech-first"
+      },
+      {
+        "label": "Creator-led"
+      },
+      {
+        "label": "Money-back guarantee"
+      }
     ],
     "audienceRibbon": {
       "title": "Made for app teams, growth marketers, and product-led brands."

@@ -9,7 +9,7 @@ type PricingSectionProps = {
 export function PricingSection({ pricing }: PricingSectionProps) {
 
   return (
-    <section id={pricing.id} className="px-4 py-20 md:px-6">
+    <section id={pricing.id} className="scroll-mt-8 px-4 py-20 md:scroll-mt-10 md:px-6">
       <div className="mx-auto max-w-6xl space-y-12">
         <SectionHeading
           eyebrow={pricing.eyebrow}

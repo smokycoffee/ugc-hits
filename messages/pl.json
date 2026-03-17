@@ -137,13 +137,18 @@
     "founder": {
       "eyebrow": "Creator-led",
       "title": "Zbudowane z perspektywy twórcy, który rozumie potrzeby marek.",
-      "name": "Jed Caluag",
-      "location": "New York, NY",
+      "name": "Tsenguun",
+      "location": "Warsaw, Poland",
       "summary": [
         "UGC Hits powstało z założenia, że sourcing twórców działa lepiej, kiedy jakość, dopasowanie i zrozumienie produktu są na pierwszym miejscu.",
         "Ta perspektywa wpływa na to, jak kampanie są oceniane, jak twórcy są dobierani i jak marki przechodzą od sourcingu do realizacji bez tracenia czasu."
       ],
-      "socials": ["Instagram", "TikTok", "YouTube", "X"]
+      "socials": [
+        "Instagram",
+        "TikTok",
+        "YouTube",
+        "X"
+      ]
     },
     "faq": {
       "title": "Pytania, które marki zadają przed publikacją kampanii",
@@ -188,9 +193,18 @@
       "copyright": "© 2026 UGC Hits. Wszelkie prawa zastrzeżone."
     },
     "stats": [
-      {"label": "Zweryfikowani twórcy", "value": "150+"},
-      {"label": "Nisze produktowe", "value": "22"},
-      {"label": "Czas do shortlisty", "value": "48h"}
+      {
+        "label": "Zweryfikowani twórcy",
+        "value": "150+"
+      },
+      {
+        "label": "Nisze produktowe",
+        "value": "22"
+      },
+      {
+        "label": "Czas do shortlisty",
+        "value": "48h"
+      }
     ],
     "creatorCards": [
       {
@@ -218,12 +232,24 @@
       "Jakość twórców ponad ilość zgłoszeń"
     ],
     "featureChips": [
-      {"label": "Zweryfikowani"},
-      {"label": "Dopasowani"},
-      {"label": "Gotowi do kontaktu"},
-      {"label": "Tech-first"},
-      {"label": "Creator-led"},
-      {"label": "Gwarancja zwrotu"}
+      {
+        "label": "Zweryfikowani"
+      },
+      {
+        "label": "Dopasowani"
+      },
+      {
+        "label": "Gotowi do kontaktu"
+      },
+      {
+        "label": "Tech-first"
+      },
+      {
+        "label": "Creator-led"
+      },
+      {
+        "label": "Gwarancja zwrotu"
+      }
     ],
     "audienceRibbon": {
       "title": "Dla zespołów aplikacji, growth marketerów i marek produktowych."

@@ -11,7 +11,7 @@ export function ProcessSection({ process }: ProcessSectionProps) {
   const { intro, steps } = process;
 
   return (
-    <section id={intro.id} className="px-4 py-20 md:px-6">
+    <section id={intro.id} className="scroll-mt-8 px-4 py-20 md:scroll-mt-10 md:px-6">
       <div className="mx-auto max-w-6xl space-y-14">
         <SectionHeading
           eyebrow={intro.eyebrow}

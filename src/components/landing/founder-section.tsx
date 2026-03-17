@@ -11,7 +11,7 @@ export function FounderSection({ founder }: FounderSectionProps) {
       <div className="mx-auto grid max-w-6xl gap-10 rounded-[2.5rem] border border-slate-200/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(247,250,255,0.96))] p-8 shadow-[0_18px_50px_rgba(15,23,42,0.08)] md:p-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
         <div className="flex flex-col items-center justify-center text-center">
           <div className="relative flex h-56 w-56 items-center justify-center rounded-full border border-white/80 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.95),rgba(186,230,253,0.8),rgba(45,212,191,0.38))] text-6xl font-semibold text-slate-950 shadow-[0_25px_60px_rgba(15,23,42,0.12)]">
-            JC
+            TB
           </div>
           <h3 className="mt-6 text-2xl font-semibold text-slate-950">
             {founder.name}
