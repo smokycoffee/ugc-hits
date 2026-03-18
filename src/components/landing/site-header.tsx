@@ -6,6 +6,7 @@ type SiteHeaderProps = {
   brand: string;
   nav: LandingLink[];
   cta: LandingLink;
+  secondaryCta?: LandingLink;
   locale: AppLocale;
   localeSwitcher: LandingContent["localeSwitcher"];
 };
@@ -14,6 +15,7 @@ export function SiteHeader({
   brand,
   nav,
   cta,
+  secondaryCta,
   locale,
   localeSwitcher,
 }: SiteHeaderProps) {
@@ -23,6 +25,7 @@ export function SiteHeader({
         brand={brand}
         links={nav}
         cta={cta}
+        secondaryCta={secondaryCta}
         locale={locale}
         localeSwitcher={localeSwitcher}
       />

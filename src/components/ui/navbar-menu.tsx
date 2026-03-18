@@ -12,6 +12,7 @@ type NavbarMenuProps = {
   brand: string;
   links: NavbarLink[];
   cta: NavbarLink;
+  secondaryCta?: NavbarLink;
   locale: AppLocale;
   localeSwitcher: {
     pl: string;
@@ -24,11 +25,13 @@ export function NavbarMenu({
   brand,
   links,
   cta,
+  secondaryCta,
   locale,
   localeSwitcher,
   className,
 }: NavbarMenuProps) {
-  const homeHref = locale === "en" ? "/en" : "/";
+  const homeHref = `/${locale}`;
+  const secondaryLabel = secondaryCta?.label ?? "Get Started";
 
   return (
     <div
@@ -100,6 +103,17 @@ export function NavbarMenu({
             {localeSwitcher.en}
           </Link>
         </div>
+        {secondaryCta ? (
+          <Link
+            href={secondaryCta.href}
+            className="inline-flex h-10 items-center justify-center rounded-full border border-slate-300 bg-white/85 px-3 text-sm font-semibold text-slate-900 transition-colors hover:bg-white md:px-5"
+          >
+            <span className="sm:hidden">
+              {locale === "en" ? "Start" : secondaryLabel}
+            </span>
+            <span className="hidden sm:inline">{secondaryLabel}</span>
+          </Link>
+        ) : null}
         <a
           href={cta.href}
           className={cn(

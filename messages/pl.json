@@ -5,7 +5,8 @@
       "howItWorks": "Jak to działa",
       "pricing": "Cennik",
       "why": "Dlaczego UGC Hits",
-      "faq": "FAQ"
+      "faq": "FAQ",
+      "getStarted": "Zacznij"
     },
     "hero": {
       "eyebrow": "Wyselekcjonowani twórcy UGC do kampanii aplikacji",
@@ -241,6 +242,104 @@
     ],
     "audienceRibbon": {
       "title": "Dla zespołów aplikacji, growth marketerów i marek produktowych."
+    },
+    "getStarted": {
+      "segmentLabel": "Wybierz swoją ścieżkę",
+      "brand": {
+        "label": "Jestem marką",
+        "headlineLead": "Lepsze UGC zaczyna się",
+        "headlineAccent": "od lepszych twórców.",
+        "description": "Dodaj kampanię i otrzymuj zgłoszenia z wyselekcjonowanej sieci twórców, lepiej dopasowanych do Twojego briefu i kategorii produktu.",
+        "benefits": [
+          {
+            "title": "Zweryfikowani twórcy",
+            "description": "Każdy twórca jest oceniany pod kątem jakości UGC, zrozumienia produktu i wyczucia contentu.",
+            "icon": "shield"
+          },
+          {
+            "title": "Lepsze dopasowanie",
+            "description": "Priorytetyzujemy twórców pasujących do Twojej niszy, odbiorcy i celu kampanii.",
+            "icon": "sliders"
+          },
+          {
+            "title": "Szybszy start",
+            "description": "Przeglądaj czytelne profile, porównuj mocne sygnały i przechodź do realizacji bez zbędnego tarcia.",
+            "icon": "gauge"
+          }
+        ],
+        "card": {
+          "title": "Uzyskaj dostęp dla marki",
+          "description": "Powiedz nam krótko o swojej firmie, żeby zacząć.",
+          "fields": [
+            {
+              "label": "Nazwa firmy",
+              "placeholder": "Nazwa Twojej firmy",
+              "type": "text"
+            },
+            {
+              "label": "Typ produktu",
+              "placeholder": "Wybierz typ produktu",
+              "type": "select",
+              "options": [
+                "Produkt fizyczny",
+                "Produkt cyfrowy",
+                "Narzędzie dla twórców",
+                "Narzędzie marketingowe",
+                "Narzędzie projektowe",
+                "Narzędzie SaaS",
+                "Narzędzie developerskie",
+                "Platforma marketplace",
+                "Oprogramowanie B2B",
+                "Aplikacja edukacyjna",
+                "Aplikacja produktywna",
+                "Aplikacja społecznościowa",
+                "Aplikacja konsumencka",
+                "Aplikacja fitness",
+                "Narzędzie AI",
+                "Aplikacja randkowa",
+                "Aplikacja finansowa",
+                "Aplikacja zdrowotna",
+                "Aplikacja gamingowa",
+                "Aplikacja podróżnicza",
+                "Aplikacja rozrywkowa",
+                "Aplikacja ecommerce",
+                "Inne"
+              ]
+            }
+          ],
+          "primaryAction": "Kontynuuj"
+        }
+      },
+      "creator": {
+        "label": "Jestem twórcą",
+        "headlineLead": "Dołącz do invite-only",
+        "headlineAccent": "creator network.",
+        "description": "Stwórz profil i otrzymuj powiadomienia o płatnych okazjach UGC od mocnych marek app i software.",
+        "benefits": [
+          {
+            "title": "Invite-only network",
+            "description": "Dołącz do zweryfikowanej sieci twórców z dostępem do płatnych kampanii topowych marek tech.",
+            "icon": "rocket"
+          },
+          {
+            "title": "Algorithmic matching",
+            "description": "Pokazujemy kampanie dopasowane do Twojej niszy, preferencji i profilu odbiorcy.",
+            "icon": "users"
+          },
+          {
+            "title": "Deals sent to you",
+            "description": "Dopasowane kampanie trafiają automatycznie do dashboardu i skrzynki mailowej.",
+            "icon": "inbox"
+          }
+        ],
+        "card": {
+          "title": "Aplikuj o dostęp",
+          "description": "Rozpocznij aplikację twórcy, kiedy będziesz gotowy.",
+          "primaryAction": "Aplikuj o dostęp",
+          "secondaryPrefix": "Masz już zaproszenie od naszego zespołu?",
+          "secondaryAction": "Zaloguj się"
+        }
+      }
     }
   },
   "LocaleSwitcher": {

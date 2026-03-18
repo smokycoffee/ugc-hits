@@ -23,7 +23,8 @@ export default async function LocalizedHome({ params }: Props) {
       <SiteHeader
         brand={content.brand}
         nav={content.nav}
-        cta={content.hero.primaryCta}
+        cta={content.header.primaryCta}
+        secondaryCta={content.header.secondaryCta}
         locale={locale as AppLocale}
         localeSwitcher={content.localeSwitcher}
       />

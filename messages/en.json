@@ -5,7 +5,8 @@
       "howItWorks": "How it works",
       "pricing": "Pricing",
       "why": "Why UGC Hits",
-      "faq": "FAQ"
+      "faq": "FAQ",
+      "getStarted": "Get Started"
     },
     "hero": {
       "eyebrow": "Vetted creator sourcing for app campaigns",
@@ -241,6 +242,104 @@
     ],
     "audienceRibbon": {
       "title": "Made for app teams, growth marketers, and product-led brands."
+    },
+    "getStarted": {
+      "segmentLabel": "Choose your path",
+      "brand": {
+        "label": "I'm a Brand",
+        "headlineLead": "Better UGC starts",
+        "headlineAccent": "with stronger creators.",
+        "description": "Post a campaign and receive applicants from a vetted creator network, matched closely to your brief and product category.",
+        "benefits": [
+          {
+            "title": "Vetted creators",
+            "description": "Every creator is reviewed for UGC quality, product understanding, and content instincts.",
+            "icon": "shield"
+          },
+          {
+            "title": "Smarter matching",
+            "description": "We prioritize creators who fit your niche, audience, and campaign goals.",
+            "icon": "sliders"
+          },
+          {
+            "title": "Move faster",
+            "description": "Review clean profiles, compare strong signals, and get into production with less friction.",
+            "icon": "gauge"
+          }
+        ],
+        "card": {
+          "title": "Apply for brand access",
+          "description": "Tell us a bit about your company to get started.",
+          "fields": [
+            {
+              "label": "Company name",
+              "placeholder": "Your company name",
+              "type": "text"
+            },
+            {
+              "label": "Product type",
+              "placeholder": "Select product type",
+              "type": "select",
+              "options": [
+                "Physical Product",
+                "Digital Product",
+                "Creator Tool",
+                "Marketing Tool",
+                "Design Tool",
+                "SaaS Tool",
+                "Developer Tool",
+                "Marketplace Platform",
+                "B2B Software",
+                "Study App",
+                "Productivity App",
+                "Social App",
+                "Consumer App",
+                "Fitness App",
+                "AI Tool",
+                "Dating App",
+                "Finance App",
+                "Health App",
+                "Gaming App",
+                "Travel App",
+                "Entertainment App",
+                "Ecommerce App",
+                "Other"
+              ]
+            }
+          ],
+          "primaryAction": "Continue"
+        }
+      },
+      "creator": {
+        "label": "I'm a Creator",
+        "headlineLead": "Join an invite-only",
+        "headlineAccent": "creator network.",
+        "description": "Create your profile and get notified about paid UGC opportunities from strong app and software brands.",
+        "benefits": [
+          {
+            "title": "Invite-only network",
+            "description": "Join a vetted creator network with access to paid campaigns from top tech brands.",
+            "icon": "rocket"
+          },
+          {
+            "title": "Algorithmic matching",
+            "description": "We surface campaigns that fit your niche, preferences, and audience profile.",
+            "icon": "users"
+          },
+          {
+            "title": "Deals sent to you",
+            "description": "Matching campaigns land in your dashboard and inbox automatically.",
+            "icon": "inbox"
+          }
+        ],
+        "card": {
+          "title": "Apply for access",
+          "description": "Start your creator application when you're ready.",
+          "primaryAction": "Apply for access",
+          "secondaryPrefix": "Already invited by our team?",
+          "secondaryAction": "Sign in"
+        }
+      }
     }
   },
   "LocaleSwitcher": {
