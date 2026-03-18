@@ -22,7 +22,10 @@ export default async function LocalizedGetStartedPage({ params }: Props) {
         localeSwitcher={content.localeSwitcher}
       />
       <main>
-        <GetStartedShell content={content.getStarted} />
+        <GetStartedShell
+          content={content.getStarted}
+          locale={locale as AppLocale}
+        />
       </main>
       <SiteFooter brand={content.brand} footer={content.footer} />
     </div>

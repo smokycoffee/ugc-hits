@@ -9,14 +9,28 @@ import {
   SlidersHorizontal,
   Users,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import type { LandingContent } from "@/lib/get-landing-content";
+import type { AppLocale } from "@/i18n/routing";
 
 type AudienceKey = "brand" | "creator";
 
 type GetStartedShellProps = {
   content: LandingContent["getStarted"];
+  locale: AppLocale;
 };
+
+type BrandLeadState = {
+  companyName: string;
+  productType: string;
+};
+
+type BrandLeadErrors = Partial<Record<keyof BrandLeadState, string>>;
+
+function getLocalizedPath(locale: AppLocale, path: string) {
+  return locale === "pl" ? path : `/${locale}${path}`;
+}
 
 function getBenefitIcon(icon: string) {
   switch (icon) {
@@ -37,8 +51,14 @@ function getBenefitIcon(icon: string) {
   }
 }
 
-export function GetStartedShell({ content }: GetStartedShellProps) {
+export function GetStartedShell({ content, locale }: GetStartedShellProps) {
   const [activeAudience, setActiveAudience] = useState<AudienceKey>("brand");
+  const [brandLead, setBrandLead] = useState<BrandLeadState>({
+    companyName: "",
+    productType: "",
+  });
+  const [brandErrors, setBrandErrors] = useState<BrandLeadErrors>({});
+  const router = useRouter();
   const audience = content[activeAudience];
   const accentTone =
     activeAudience === "brand" ? "text-teal-700" : "text-sky-800";
@@ -46,6 +66,50 @@ export function GetStartedShell({ content }: GetStartedShellProps) {
     activeAudience === "brand"
       ? "bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(238,250,248,0.9))]"
       : "bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(239,246,255,0.9))]";
+
+  function updateBrandLead(field: keyof BrandLeadState, value: string) {
+    setBrandLead((current) => ({ ...current, [field]: value }));
+    setBrandErrors((current) => {
+      if (!current[field]) {
+        return current;
+      }
+
+      const nextErrors = { ...current };
+      delete nextErrors[field];
+      return nextErrors;
+    });
+  }
+
+  function handlePrimaryAction() {
+    if (activeAudience !== "brand") {
+      return;
+    }
+
+    const nextErrors: BrandLeadErrors = {};
+
+    if (!brandLead.companyName.trim()) {
+      nextErrors.companyName = "Company name is required.";
+    }
+
+    if (!brandLead.productType.trim()) {
+      nextErrors.productType = "Product type is required.";
+    }
+
+    setBrandErrors(nextErrors);
+
+    if (Object.keys(nextErrors).length > 0) {
+      return;
+    }
+
+    const params = new URLSearchParams({
+      companyName: brandLead.companyName.trim(),
+      productType: brandLead.productType.trim(),
+    });
+
+    router.push(
+      `${getLocalizedPath(locale, "/onboarding-brand")}?${params.toString()}`,
+    );
+  }
 
   return (
     <section className="relative overflow-hidden px-4 pb-14 pt-8 md:px-6 md:pb-20 md:pt-10">
@@ -140,8 +204,26 @@ export function GetStartedShell({ content }: GetStartedShellProps) {
                       </label>
                       {field.type === "select" ? (
                         <select
-                          defaultValue=""
-                          className="h-14 w-full rounded-[1.1rem] border border-slate-300 bg-white/85 px-4 text-base text-slate-500 outline-none transition-colors focus:border-slate-950"
+                          value={
+                            activeAudience === "brand" && field.label === "Product type"
+                              ? brandLead.productType
+                              : ""
+                          }
+                          onChange={(event) => {
+                            if (
+                              activeAudience === "brand" &&
+                              field.label === "Product type"
+                            ) {
+                              updateBrandLead("productType", event.target.value);
+                            }
+                          }}
+                          className={`h-14 w-full rounded-[1.1rem] border bg-white/85 px-4 text-base outline-none transition-colors focus:border-slate-950 ${
+                            activeAudience === "brand" &&
+                            field.label === "Product type" &&
+                            brandErrors.productType
+                              ? "border-rose-400 text-slate-950"
+                              : "border-slate-300 text-slate-500"
+                          }`}
                         >
                           <option value="" disabled>
                             {field.placeholder}
@@ -155,10 +237,39 @@ export function GetStartedShell({ content }: GetStartedShellProps) {
                       ) : (
                         <input
                           type="text"
+                          value={
+                            activeAudience === "brand" && field.label === "Company name"
+                              ? brandLead.companyName
+                              : ""
+                          }
+                          onChange={(event) => {
+                            if (
+                              activeAudience === "brand" &&
+                              field.label === "Company name"
+                            ) {
+                              updateBrandLead("companyName", event.target.value);
+                            }
+                          }}
                           placeholder={field.placeholder}
-                          className="h-14 w-full rounded-[1.1rem] border border-slate-300 bg-white/85 px-4 text-base text-slate-950 outline-none transition-colors placeholder:text-slate-400 focus:border-slate-950"
+                          className={`h-14 w-full rounded-[1.1rem] border bg-white/85 px-4 text-base text-slate-950 outline-none transition-colors placeholder:text-slate-400 focus:border-slate-950 ${
+                            activeAudience === "brand" &&
+                            field.label === "Company name" &&
+                            brandErrors.companyName
+                              ? "border-rose-400"
+                              : "border-slate-300"
+                          }`}
                         />
                       )}
+                      {activeAudience === "brand" && field.label === "Company name" ? (
+                        <p className="mt-2 text-sm text-rose-600">
+                          {brandErrors.companyName}
+                        </p>
+                      ) : null}
+                      {activeAudience === "brand" && field.label === "Product type" ? (
+                        <p className="mt-2 text-sm text-rose-600">
+                          {brandErrors.productType}
+                        </p>
+                      ) : null}
                     </div>
                   ))}
                 </div>
@@ -166,6 +277,7 @@ export function GetStartedShell({ content }: GetStartedShellProps) {
 
               <button
                 type="button"
+                onClick={handlePrimaryAction}
                 className="mt-7 inline-flex h-14 w-full items-center justify-center rounded-[1rem] bg-slate-950 px-6 text-base font-semibold text-white transition-colors hover:bg-slate-800"
               >
                 {audience.card.primaryAction}
