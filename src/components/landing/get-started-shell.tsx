@@ -29,7 +29,7 @@ type BrandLeadState = {
 type BrandLeadErrors = Partial<Record<keyof BrandLeadState, string>>;
 
 function getLocalizedPath(locale: AppLocale, path: string) {
-  return locale === "pl" ? path : `/${locale}${path}`;
+  return `/${locale}${path}`;
 }
 
 function getBenefitIcon(icon: string) {
@@ -66,6 +66,16 @@ export function GetStartedShell({ content, locale }: GetStartedShellProps) {
     activeAudience === "brand"
       ? "bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(238,250,248,0.9))]"
       : "bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(239,246,255,0.9))]";
+  const validationCopy =
+    locale === "pl"
+      ? {
+          companyNameRequired: "Nazwa firmy jest wymagana.",
+          productTypeRequired: "Typ produktu jest wymagany.",
+        }
+      : {
+          companyNameRequired: "Company name is required.",
+          productTypeRequired: "Product type is required.",
+        };
 
   function updateBrandLead(field: keyof BrandLeadState, value: string) {
     setBrandLead((current) => ({ ...current, [field]: value }));
@@ -88,11 +98,11 @@ export function GetStartedShell({ content, locale }: GetStartedShellProps) {
     const nextErrors: BrandLeadErrors = {};
 
     if (!brandLead.companyName.trim()) {
-      nextErrors.companyName = "Company name is required.";
+      nextErrors.companyName = validationCopy.companyNameRequired;
     }
 
     if (!brandLead.productType.trim()) {
-      nextErrors.productType = "Product type is required.";
+      nextErrors.productType = validationCopy.productTypeRequired;
     }
 
     setBrandErrors(nextErrors);
@@ -197,30 +207,21 @@ export function GetStartedShell({ content, locale }: GetStartedShellProps) {
 
               {audience.card.fields?.length ? (
                 <div className="mt-8 space-y-5">
-                  {audience.card.fields.map((field) => (
+                  {audience.card.fields.map((field, fieldIndex) => (
                     <div key={field.label}>
                       <label className="mb-2 block text-base font-semibold text-slate-950">
                         {field.label}
                       </label>
                       {field.type === "select" ? (
                         <select
-                          value={
-                            activeAudience === "brand" && field.label === "Product type"
-                              ? brandLead.productType
-                              : ""
-                          }
+                          value={activeAudience === "brand" && fieldIndex === 1 ? brandLead.productType : ""}
                           onChange={(event) => {
-                            if (
-                              activeAudience === "brand" &&
-                              field.label === "Product type"
-                            ) {
+                            if (activeAudience === "brand" && fieldIndex === 1) {
                               updateBrandLead("productType", event.target.value);
                             }
                           }}
                           className={`h-14 w-full rounded-[1.1rem] border bg-white/85 px-4 text-base outline-none transition-colors focus:border-slate-950 ${
-                            activeAudience === "brand" &&
-                            field.label === "Product type" &&
-                            brandErrors.productType
+                            activeAudience === "brand" && fieldIndex === 1 && brandErrors.productType
                               ? "border-rose-400 text-slate-950"
                               : "border-slate-300 text-slate-500"
                           }`}
@@ -237,35 +238,26 @@ export function GetStartedShell({ content, locale }: GetStartedShellProps) {
                       ) : (
                         <input
                           type="text"
-                          value={
-                            activeAudience === "brand" && field.label === "Company name"
-                              ? brandLead.companyName
-                              : ""
-                          }
+                          value={activeAudience === "brand" && fieldIndex === 0 ? brandLead.companyName : ""}
                           onChange={(event) => {
-                            if (
-                              activeAudience === "brand" &&
-                              field.label === "Company name"
-                            ) {
+                            if (activeAudience === "brand" && fieldIndex === 0) {
                               updateBrandLead("companyName", event.target.value);
                             }
                           }}
                           placeholder={field.placeholder}
                           className={`h-14 w-full rounded-[1.1rem] border bg-white/85 px-4 text-base text-slate-950 outline-none transition-colors placeholder:text-slate-400 focus:border-slate-950 ${
-                            activeAudience === "brand" &&
-                            field.label === "Company name" &&
-                            brandErrors.companyName
+                            activeAudience === "brand" && fieldIndex === 0 && brandErrors.companyName
                               ? "border-rose-400"
                               : "border-slate-300"
                           }`}
                         />
                       )}
-                      {activeAudience === "brand" && field.label === "Company name" ? (
+                      {activeAudience === "brand" && fieldIndex === 0 ? (
                         <p className="mt-2 text-sm text-rose-600">
                           {brandErrors.companyName}
                         </p>
                       ) : null}
-                      {activeAudience === "brand" && field.label === "Product type" ? (
+                      {activeAudience === "brand" && fieldIndex === 1 ? (
                         <p className="mt-2 text-sm text-rose-600">
                           {brandErrors.productType}
                         </p>

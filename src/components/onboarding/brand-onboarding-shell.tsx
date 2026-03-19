@@ -10,13 +10,17 @@ import {
   FileText,
   Globe,
   ImagePlus,
+  Instagram,
   Info,
+  Music2,
   PencilRuler,
   Sparkles,
   UsersRound,
+  Youtube,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import type { AppLocale } from "@/i18n/routing";
 
 type StepIcon =
   | typeof Building2
@@ -40,6 +44,7 @@ type BrandOnboardingShellProps = {
   initialCompanyName: string;
   initialProductType: string;
   productTypeOptions: string[];
+  locale: AppLocale;
 };
 
 type BrandOnboardingForm = {
@@ -59,10 +64,15 @@ type BrandOnboardingForm = {
   creatorGenders: string[];
   creatorEthnicities: string[];
   campaignType: string;
+  campaignFrequency: string;
   budgetMin: string;
   budgetMax: string;
   inspirationLinks: [string, string, string];
   campaignDescription: string;
+  uniquePosts: string;
+  postingPlatforms: string[];
+  minimumFollowerCount: string;
+  includesPaidUsage: boolean;
 };
 
 type ErrorState = Partial<Record<keyof BrandOnboardingForm, string>>;
@@ -70,7 +80,7 @@ type ErrorState = Partial<Record<keyof BrandOnboardingForm, string>>;
 const steps: StepConfig[] = [
   {
     id: "company",
-    title: "Company details",
+    title: "Company Details",
     kicker: "Step 1",
     description:
       "Tell us about your company. This will be shown to creators on your campaign listing.",
@@ -85,7 +95,7 @@ const steps: StepConfig[] = [
   },
   {
     id: "personal",
-    title: "Personal info",
+    title: "Personal Info",
     kicker: "Step 2",
     description:
       "This information is private and will not be shared with creators.",
@@ -94,7 +104,7 @@ const steps: StepConfig[] = [
   },
   {
     id: "creator-preferences",
-    title: "Creator preferences",
+    title: "Creator Preferences",
     kicker: "Step 3",
     description:
       "Shape the creator profile you want to attract while keeping the matching pool healthy.",
@@ -126,7 +136,7 @@ const steps: StepConfig[] = [
   },
   {
     id: "creative-direction",
-    title: "Creative direction",
+    title: "Creative Direction",
     kicker: "Step 6",
     description:
       "Share references that signal the visual style and performance bar you want creators to match.",
@@ -135,7 +145,7 @@ const steps: StepConfig[] = [
   },
   {
     id: "campaign-description",
-    title: "Campaign description",
+    title: "Campaign Description",
     kicker: "Step 7",
     description:
       "Describe your company and how much direction the creator will receive so the right applicants opt in.",
@@ -168,9 +178,9 @@ const creatorNicheOptions = [
   "Music",
 ];
 const creatorLocationOptions = [
-  "Any country",
-  "United States only",
-  "United States, Canada, United Kingdom, Australia, or New Zealand",
+  "Poland",
+  "Europe only",
+  "Any location",
 ];
 const creatorAgeOptions = ["18-21", "22-25", "26-29", "30-34", "35-39", "40+"];
 const creatorGenderOptions = ["Woman", "Man"];
@@ -187,19 +197,26 @@ const campaignTypes = [
   {
     id: "ugc-program",
     label: "UGC Program",
-    description: "Content posted to brand new, creator-managed accounts",
+    description: "Content designed for creator-made UGC submissions and approvals",
   },
   {
     id: "paid-ads",
     label: "Paid Ads Campaign",
-    description: "Content posted to brand-managed accounts",
+    description: "Content built for brand-managed ad accounts and paid social",
   },
   {
     id: "influencer-campaign",
     label: "Influencer Campaign",
-    description: "Content posted to the influencer's own accounts",
+    description: "Content published on the creator's own channels",
   },
 ];
+const campaignFrequencyOptions = ["Monthly Retainer", "Weekly Retainer", "One Time"];
+const postingPlatforms = [
+  { id: "instagram", label: "Instagram", icon: Instagram },
+  { id: "tiktok", label: "TikTok", icon: Music2 },
+  { id: "youtube", label: "YouTube", icon: Youtube },
+];
+const minimumFollowerOptions = ["10K+", "25K+", "50K+", "100K+", "250K+"];
 
 function createInitialFormState(
   initialCompanyName: string,
@@ -222,11 +239,22 @@ function createInitialFormState(
     creatorGenders: [],
     creatorEthnicities: [],
     campaignType: "",
+    campaignFrequency: "",
     budgetMin: "",
     budgetMax: "",
     inspirationLinks: ["", "", ""],
     campaignDescription: "",
+    uniquePosts: "",
+    postingPlatforms: [],
+    minimumFollowerCount: "",
+    includesPaidUsage: false,
   };
+}
+
+function selectionSurface(selected: boolean) {
+  return selected
+    ? "border-teal-200 bg-[linear-gradient(180deg,rgba(240,253,250,0.98),rgba(233,250,247,0.95))] text-slate-950 shadow-[0_10px_26px_rgba(13,148,136,0.10)]"
+    : "border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.95),rgba(248,250,252,0.95))] text-slate-700 shadow-[0_6px_20px_rgba(15,23,42,0.05)] hover:border-slate-300 hover:bg-white hover:text-slate-950";
 }
 
 function FieldLabel({
@@ -330,12 +358,66 @@ function OptionChip({
       onClick={onClick}
       aria-pressed={selected}
       className={cn(
-        "rounded-full border px-4 py-2 text-sm font-semibold transition-all",
-        selected
-          ? "border-slate-950 bg-slate-950 text-white shadow-[0_10px_24px_rgba(15,23,42,0.15)]"
-          : "border-white/85 bg-white/82 text-slate-700 hover:border-slate-300 hover:text-slate-950",
+        "rounded-full border px-4 py-2.5 text-sm font-semibold transition-all",
+        selectionSurface(selected),
       )}
     >
+      {label}
+    </button>
+  );
+}
+
+function ChoiceRow({
+  label,
+  selected,
+  onClick,
+}: {
+  label: string;
+  selected: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "flex w-full items-center gap-3 rounded-[1rem] border px-4 py-3 text-left transition-colors",
+        selectionSurface(selected),
+      )}
+    >
+      <span
+        className={cn(
+          "size-4 rounded-full border transition-colors",
+          selected ? "border-teal-500 bg-teal-500/85" : "border-slate-300 bg-white",
+        )}
+      />
+      <span className="text-sm font-medium">{label}</span>
+    </button>
+  );
+}
+
+function PlatformChip({
+  label,
+  selected,
+  onClick,
+  icon: Icon,
+}: {
+  label: string;
+  selected: boolean;
+  onClick: () => void;
+  icon: typeof Instagram;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={selected}
+      className={cn(
+        "flex items-center gap-3 rounded-full border px-4 py-3 text-sm font-semibold transition-all",
+        selectionSurface(selected),
+      )}
+    >
+      <Icon className="size-4" />
       {label}
     </button>
   );
@@ -345,7 +427,279 @@ export function BrandOnboardingShell({
   initialCompanyName,
   initialProductType,
   productTypeOptions,
+  locale,
 }: BrandOnboardingShellProps) {
+  const isPolish = locale === "pl";
+  const copy = isPolish
+    ? {
+        createCampaign: "Stwórz kampanię",
+        stepLabel: "Krok",
+        stepOf: "z",
+        successBadge: "Szkic kampanii gotowy",
+        successTitle: "Twoja kampania UGC Hits jest gotowa.",
+        successDescription:
+          "Flow zbiera teraz szczegóły kampanii, targetowanie i kierunek kreatywny w tym samym języku wizualnym co landing UGC Hits.",
+        reviewAgain: "Przejrzyj onboarding ponownie",
+        back: "Wstecz",
+        next: "Dalej",
+        companySummary: "Firma",
+        campaignTypeSummary: "Typ kampanii",
+        targetingSummary: "Targetowanie",
+        companyDetails: "Dane firmy",
+        companyDetailsDescription:
+          "Opowiedz o swojej firmie. Ta sekcja będzie widoczna dla twórców na stronie kampanii.",
+        personalInfo: "Informacje prywatne",
+        personalInfoDescription:
+          "Te informacje są prywatne i nie będą udostępniane twórcom.",
+        creatorPreferences: "Preferencje twórców",
+        creatorPreferencesDescription:
+          "Określ profil twórców, których chcesz przyciągnąć. Wszystkie preferencje poza etnicznością będą widoczne przy kampanii.",
+        deliverables: "Deliverables",
+        deliverablesDescription:
+          "Określ zakres deliverables na twórcę. Te informacje będą widoczne dla twórców na stronie kampanii.",
+        budget: "Budżet",
+        budgetDescription:
+          "Weryfikujemy jakość po stronie twórcy i marki, więc kampanie z bazową stawką poniżej 25 USD raczej nie zostaną zaakceptowane.",
+        creativeDirection: "Kierunek kreatywny",
+        creativeDirectionDescription:
+          "Pokaż przykłady UGC lub reklam, które oddają styl i jakość, jakiej oczekujesz, najlepiej z Twojej marki.",
+        campaignDescription: "Opis kampanii",
+        campaignDescriptionDescription:
+          "Napisz więcej o swojej firmie i o tym, jak dużo kierunku kreatywnego zapewnisz przy tej kampanii.",
+        companyName: "Nazwa firmy",
+        companyWebsite: "Strona firmy",
+        socials: "Social media",
+        productType: "Typ produktu",
+        companyLogo: "Logo firmy",
+        yourName: "Twoje imię i nazwisko",
+        yourRole: "Twoja rola",
+        heardAbout: "Skąd dowiedziałeś(-aś) się o UGC Hits?",
+        creatorSlots: "Ile miejsc jest dostępnych?",
+        creatorNiche: "Nisza twórcy",
+        creatorLocation: "Lokalizacja twórcy",
+        creatorAgeRange: "Wiek twórcy",
+        creatorGender: "Płeć twórcy",
+        creatorEthnicity: "Etniczność twórcy",
+        campaignType: "Typ kampanii",
+        campaignFrequency: "Częstotliwość kampanii",
+        uniquePosts: "Liczba unikalnych materiałów na twórcę",
+        postingTo: "Publikacja na (wybierz wszystkie pasujące)",
+        minimumFollowers: "Minimalna liczba obserwujących (łącznie na platformach)",
+        paidUsage: "Czy potrzebujesz praw do paid usage?",
+        includesPaidUsage: "Uwzględnij paid usage",
+        basePayPerPost: "Stawka bazowa za materiał",
+        minLabel: "Min ($)",
+        maxLabel: "Max ($)",
+        contentInspiration: "Inspiracje contentowe",
+        campaignBrief: "Opis kampanii",
+        anyCountry: "Dowolny kraj",
+        usOnly: "Tylko Stany Zjednoczone",
+        tierOneCountries:
+          "Stany Zjednoczone, Kanada, Wielka Brytania, Australia lub Nowa Zelandia",
+        selectUpToThree: "Wybierz maksymalnie 3.",
+        leaveBlank: "Zostaw puste, jeśli nie masz preferencji.",
+        ethnicityHelper:
+          "Nie jest widoczne na stronie kampanii. Zostaw puste, jeśli nie masz preferencji.",
+        socialsHelper:
+          "Wystarczy przynajmniej jeden profil. Możesz też podać social media foundera.",
+        budgetHelper: "Podaj zakres budżetu, który chcesz zapłacić za materiał.",
+        budgetNote:
+          "Budżet nie będzie widoczny dla twórców w kampaniach influencer marketingowych. Te informacje służą nam do wewnętrznego dopasowania.",
+        creatorFiltersWarning:
+          "Twórcy muszą pasować do wybranej lokalizacji, płci i etniczności, aby zobaczyć kampanię. Nisza i wiek pomagają w dopasowaniu, ale nie ograniczają widoczności. Im więcej filtrów ustawisz, tym mniej zgłoszeń otrzymasz.",
+        logoHelper: "PNG lub JPG w zupełności wystarczy na potrzeby tego mocka.",
+        uploadLogo: "Prześlij logo firmy",
+        heardAboutPlaceholder: "Gdzie usłyszałeś(-aś) o UGC Hits?",
+        namePlaceholder: "Imię i nazwisko",
+        websitePlaceholder: "example.com",
+        instagramPlaceholder: "Instagram handle lub URL",
+        tiktokPlaceholder: "TikTok handle lub URL",
+        uniquePostsPlaceholder: "np. 4",
+        budgetMinPlaceholder: "100",
+        budgetMaxPlaceholder: "150",
+        inspirationPlaceholder: "https://...",
+        campaignBriefPlaceholder: "Napisz szczegółowy opis firmy i kampanii",
+        reviewCampaign: "Przejrzyj kampanię ponownie",
+        companyNameRequired: "Nazwa firmy jest wymagana.",
+        companyWebsiteRequired: "Strona firmy jest wymagana.",
+        socialRequired: "Dodaj przynajmniej jeden profil społecznościowy.",
+        productTypeRequired: "Typ produktu jest wymagany.",
+        companyLogoRequired: "Logo firmy jest wymagane.",
+        contactNameRequired: "Imię i nazwisko są wymagane.",
+        roleRequired: "Wybierz swoją rolę.",
+        referralRequired: "Powiedz nam, skąd dowiedziałeś(-aś) się o UGC Hits.",
+        creatorSlotsRequired: "Wybierz liczbę dostępnych miejsc.",
+        creatorNicheRequired: "Wybierz przynajmniej jedną niszę twórcy.",
+        campaignTypeRequired: "Wybierz typ kampanii.",
+        campaignFrequencyRequired: "Wybierz częstotliwość kampanii.",
+        uniquePostsRequired: "Podaj liczbę unikalnych materiałów na twórcę.",
+        postingPlatformsRequired: "Wybierz przynajmniej jedną platformę publikacji.",
+        minimumFollowersRequired: "Wybierz minimalną liczbę obserwujących.",
+        budgetMinRequired: "Podaj minimalny budżet.",
+        budgetMaxRequired: "Podaj maksymalny budżet.",
+        inspirationRequired: "Dodaj przynajmniej jeden link inspiracyjny.",
+        campaignDescriptionRequired: "Opis kampanii jest wymagany.",
+        roleOptions: ["Founder", "Marketing", "Agencja/Partner"],
+        creatorLocationOptions: [
+          "Dowolny kraj",
+          "Tylko Stany Zjednoczone",
+          "Stany Zjednoczone, Kanada, Wielka Brytania, Australia lub Nowa Zelandia",
+        ],
+        creatorGenderOptions: ["Kobieta", "Mężczyzna"],
+        creatorEthnicityOptions: [
+          "Azjatycka",
+          "Czarna/Afroamerykańska",
+          "Latynoska",
+          "Biała/Kaukaska",
+          "Rdzenna/Indigenous",
+          "Wyspy Pacyfiku",
+        ],
+        campaignFrequencyOptions: [
+          "Retainer miesięczny",
+          "Retainer tygodniowy",
+          "Jednorazowo",
+        ],
+        campaignTypes: [
+          {
+            id: "ugc-program",
+            label: "Program UGC",
+            description:
+              "Treści tworzone pod UGC od twórców i proces akceptacji po stronie marki",
+          },
+          {
+            id: "paid-ads",
+            label: "Kampania Paid Ads",
+            description:
+              "Treści przygotowane pod konta reklamowe marki i paid social",
+          },
+          {
+            id: "influencer-campaign",
+            label: "Kampania Influencer",
+            description: "Treści publikowane na własnych kanałach twórcy",
+          },
+        ],
+        postingPlatforms: [
+          { id: "instagram", label: "Instagram", icon: Instagram },
+          { id: "tiktok", label: "TikTok", icon: Music2 },
+          { id: "youtube", label: "YouTube", icon: Youtube },
+        ],
+      }
+    : {
+        createCampaign: "Create your campaign",
+        stepLabel: "Step",
+        stepOf: "of",
+        successBadge: "Campaign draft created",
+        successTitle: "Your UGC Hits campaign is ready.",
+        successDescription:
+          "The flow now captures your campaign details, targeting, and creative direction in the same visual language as the UGC Hits landing page.",
+        reviewAgain: "Review onboarding again",
+        back: "Back",
+        next: "Next",
+        companySummary: "Company",
+        campaignTypeSummary: "Campaign type",
+        targetingSummary: "Targeting",
+        companyDetails: "Company Details",
+        companyDetailsDescription:
+          "Tell us about your company. This section will be shown to creators on your campaign listing.",
+        personalInfo: "Personal Info",
+        personalInfoDescription:
+          "This information is private and will not be shared with creators.",
+        creatorPreferences: "Creator Preferences",
+        creatorPreferencesDescription:
+          "Shape the creator profile you want to attract. All preferences except ethnicity will be visible on your campaign listing.",
+        deliverables: "Deliverables",
+        deliverablesDescription:
+          "Set the deliverables per creator. This information will be shown to creators on your campaign listing.",
+        budget: "Budget",
+        budgetDescription:
+          "We vet for quality on both the creator and brand side, so campaigns with a base pay less than $25 are unlikely to get approved.",
+        creativeDirection: "Creative Direction",
+        creativeDirectionDescription:
+          "Share examples of UGC or ads that match the style and quality you want, ideally from your own brand.",
+        campaignDescription: "Campaign Description",
+        campaignDescriptionDescription:
+          "Share more about your company and the level of creative direction you will provide for this campaign.",
+        companyName: "Company Name",
+        companyWebsite: "Company Website",
+        socials: "Socials",
+        productType: "Product Type",
+        companyLogo: "Company Logo",
+        yourName: "Your Name",
+        yourRole: "Your Role",
+        heardAbout: "How did you hear about UGC Hits?",
+        creatorSlots: "How many spots are available?",
+        creatorNiche: "Creator niche",
+        creatorLocation: "Creator Location",
+        creatorAgeRange: "Creator Age Range",
+        creatorGender: "Creator Gender",
+        creatorEthnicity: "Creator Ethnicity",
+        campaignType: "Campaign type",
+        campaignFrequency: "Campaign frequency",
+        uniquePosts: "Unique posts to create per creator",
+        postingTo: "Posting to (select all that apply)",
+        minimumFollowers: "Minimum creator follower count (across platforms)",
+        paidUsage: "Do you need paid usage rights?",
+        includesPaidUsage: "Includes paid usage",
+        basePayPerPost: "Base Pay Per Post",
+        minLabel: "Min ($)",
+        maxLabel: "Max ($)",
+        contentInspiration: "Content Inspiration",
+        campaignBrief: "Campaign Brief",
+        anyCountry: "Any country",
+        usOnly: "United States only",
+        tierOneCountries:
+          "United States, Canada, United Kingdom, Australia, or New Zealand",
+        selectUpToThree: "Select up to 3.",
+        leaveBlank: "Leave blank for no preference.",
+        ethnicityHelper:
+          "Not shown on your campaign listing. Leave blank for no preference.",
+        socialsHelper:
+          "At least one is required. Founder's socials is also acceptable.",
+        budgetHelper: "Enter the budget range you are willing to pay per post.",
+        budgetNote:
+          "Budget will not be shown to creators for influencer marketing campaigns. This information is for internal use and matching.",
+        creatorFiltersWarning:
+          "Creators must match your location, gender, and ethnicity selections to see your campaign. Niche and age are used to improve relevance, but do not restrict visibility. The more filters you apply, the fewer applicants you will receive.",
+        logoHelper: "PNG or JPG is enough for this onboarding mock flow.",
+        uploadLogo: "Upload your company logo",
+        heardAboutPlaceholder: "Where did you hear about UGC Hits?",
+        namePlaceholder: "First and last name",
+        websitePlaceholder: "example.com",
+        instagramPlaceholder: "Instagram handle or URL",
+        tiktokPlaceholder: "TikTok handle or URL",
+        uniquePostsPlaceholder: "e.g. 4",
+        budgetMinPlaceholder: "100",
+        budgetMaxPlaceholder: "150",
+        inspirationPlaceholder: "https://...",
+        campaignBriefPlaceholder: "Write a detailed description of your company and campaign",
+        reviewCampaign: "Review campaign again",
+        companyNameRequired: "Company name is required.",
+        companyWebsiteRequired: "Company website is required.",
+        socialRequired: "Add at least one social profile.",
+        productTypeRequired: "Product type is required.",
+        companyLogoRequired: "Company logo is required.",
+        contactNameRequired: "Your name is required.",
+        roleRequired: "Select your role.",
+        referralRequired: "Tell us how you heard about UGC Hits.",
+        creatorSlotsRequired: "Choose how many spots are available.",
+        creatorNicheRequired: "Select at least one creator niche.",
+        campaignTypeRequired: "Choose a campaign type.",
+        campaignFrequencyRequired: "Choose a campaign frequency.",
+        uniquePostsRequired: "Enter how many unique posts each creator should make.",
+        postingPlatformsRequired: "Select at least one posting platform.",
+        minimumFollowersRequired: "Choose a minimum creator follower count.",
+        budgetMinRequired: "Enter a minimum budget.",
+        budgetMaxRequired: "Enter a maximum budget.",
+        inspirationRequired: "Add at least one inspiration link.",
+        campaignDescriptionRequired: "Campaign description is required.",
+        roleOptions,
+        creatorLocationOptions,
+        creatorGenderOptions,
+        creatorEthnicityOptions,
+        campaignFrequencyOptions,
+        campaignTypes,
+        postingPlatforms,
+      };
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<BrandOnboardingForm>(() =>
     createInitialFormState(initialCompanyName, initialProductType),
@@ -354,8 +708,79 @@ export function BrandOnboardingShell({
   const [submitted, setSubmitted] = useState(false);
   const fileInputId = useId();
 
-  const progress = ((currentStep + 1) / steps.length) * 100;
-  const currentConfig = steps[currentStep];
+  const localizedSteps = isPolish
+    ? [
+        {
+          ...steps[0],
+          kicker: "Krok 1",
+          title: "Dane Firmy",
+          description:
+            "Opowiedz o swojej firmie. Ta sekcja będzie widoczna dla twórców na stronie kampanii.",
+          highlights: [
+            "Nazwa firmy",
+            "Strona internetowa",
+            "Instagram lub TikTok",
+            "Typ produktu",
+            "Logo firmy",
+          ],
+        },
+        {
+          ...steps[1],
+          kicker: "Krok 2",
+          title: "Informacje Prywatne",
+          description:
+            "Te informacje są prywatne i nie będą udostępniane twórcom.",
+          highlights: ["Imię i nazwisko", "Twoja rola", "Skąd nas znasz"],
+        },
+        {
+          ...steps[2],
+          kicker: "Krok 3",
+          title: "Preferencje Twórców",
+          description:
+            "Określ profil twórców, których chcesz przyciągnąć, bez zamykania zbyt dużej części puli.",
+          highlights: [
+            "Liczba miejsc",
+            "Nisza twórcy",
+            "Lokalizacja",
+            "Wiek, płeć i etniczność",
+          ],
+        },
+        {
+          ...steps[3],
+          kicker: "Krok 4",
+          title: "Deliverables",
+          description:
+            "Wybierz typ kampanii i ustaw oczekiwania, które twórcy od razu zrozumieją.",
+          highlights: ["Program UGC", "Kampania Paid Ads", "Kampania Influencer"],
+        },
+        {
+          ...steps[4],
+          kicker: "Krok 5",
+          title: "Budżet",
+          description:
+            "Ustal bazowy zakres stawek, jaki chcesz zaoferować za każdy materiał.",
+          highlights: ["Minimalna stawka", "Maksymalna stawka", "Wewnętrzna notatka o budżecie"],
+        },
+        {
+          ...steps[5],
+          kicker: "Krok 6",
+          title: "Kierunek Kreatywny",
+          description:
+            "Pokaż przykłady, które sygnalizują styl, poziom i energię treści, jakiej oczekujesz.",
+          highlights: ["Link referencyjny 1", "Link referencyjny 2", "Link referencyjny 3"],
+        },
+        {
+          ...steps[6],
+          kicker: "Krok 7",
+          title: "Opis Kampanii",
+          description:
+            "Opisz firmę i poziom kierunku kreatywnego, aby przyciągnąć odpowiednich kandydatów.",
+          highlights: ["Brief kampanii", "Poziom guidance", "Limit 2000 znaków"],
+        },
+      ]
+    : steps;
+  const progress = ((currentStep + 1) / localizedSteps.length) * 100;
+  const currentConfig = localizedSteps[currentStep];
 
   function updateField<K extends keyof BrandOnboardingForm>(
     field: K,
@@ -391,58 +816,94 @@ export function BrandOnboardingShell({
     updateField("inspirationLinks", nextLinks);
   }
 
+  function togglePostingPlatform(value: string) {
+    const nextPlatforms = formData.postingPlatforms.includes(value)
+      ? formData.postingPlatforms.filter((item) => item !== value)
+      : [...formData.postingPlatforms, value];
+
+    updateField("postingPlatforms", nextPlatforms);
+  }
+
   function validateStep(stepIndex: number) {
     const nextErrors: ErrorState = {};
 
     if (stepIndex === 0) {
       if (!formData.companyName.trim()) {
-        nextErrors.companyName = "Company name is required.";
+        nextErrors.companyName = copy.companyNameRequired;
       }
       if (!formData.companyWebsite.trim()) {
-        nextErrors.companyWebsite = "Company website is required.";
+        nextErrors.companyWebsite = copy.companyWebsiteRequired;
       }
       if (!formData.instagram.trim() && !formData.tiktok.trim()) {
-        nextErrors.instagram = "Add at least one social profile.";
+        nextErrors.instagram = copy.socialRequired;
       }
       if (!formData.productType.trim()) {
-        nextErrors.productType = "Product type is required.";
+        nextErrors.productType = copy.productTypeRequired;
       }
       if (!formData.companyLogoName.trim()) {
-        nextErrors.companyLogoName = "Company logo is required.";
+        nextErrors.companyLogoName = copy.companyLogoRequired;
       }
     }
 
     if (stepIndex === 1) {
       if (!formData.contactName.trim()) {
-        nextErrors.contactName = "Your name is required.";
+        nextErrors.contactName = copy.contactNameRequired;
       }
       if (!formData.role.trim()) {
-        nextErrors.role = "Select your role.";
+        nextErrors.role = copy.roleRequired;
       }
       if (!formData.referralSource.trim()) {
-        nextErrors.referralSource = "Tell us how you heard about UGC Tank.";
+        nextErrors.referralSource = copy.referralRequired;
       }
     }
 
     if (stepIndex === 2) {
       if (!formData.creatorSlots.trim()) {
-        nextErrors.creatorSlots = "Choose how many spots are available.";
+        nextErrors.creatorSlots = copy.creatorSlotsRequired;
       }
       if (formData.creatorNiches.length === 0) {
-        nextErrors.creatorNiches = "Select at least one creator niche.";
+        nextErrors.creatorNiches = copy.creatorNicheRequired;
       }
     }
 
-    if (stepIndex === 3 && !formData.campaignType.trim()) {
-      nextErrors.campaignType = "Choose a campaign type.";
+    if (stepIndex === 3) {
+      if (!formData.campaignType.trim()) {
+        nextErrors.campaignType = copy.campaignTypeRequired;
+      }
+      if (!formData.uniquePosts.trim()) {
+        nextErrors.uniquePosts = "Enter how many unique posts each creator should make.";
+      }
+      if (
+        (formData.campaignType === "ugc-program" ||
+          formData.campaignType === "paid-ads") &&
+        !formData.campaignFrequency.trim()
+      ) {
+        nextErrors.campaignFrequency = copy.campaignFrequencyRequired;
+      }
+      if (
+        (formData.campaignType === "ugc-program" ||
+          formData.campaignType === "influencer-campaign") &&
+        formData.postingPlatforms.length === 0
+      ) {
+        nextErrors.postingPlatforms = copy.postingPlatformsRequired;
+      }
+      if (
+        formData.campaignType === "influencer-campaign" &&
+        !formData.minimumFollowerCount.trim()
+      ) {
+        nextErrors.minimumFollowerCount = copy.minimumFollowersRequired;
+      }
+      if (!formData.uniquePosts.trim()) {
+        nextErrors.uniquePosts = copy.uniquePostsRequired;
+      }
     }
 
     if (stepIndex === 4) {
       if (!formData.budgetMin.trim()) {
-        nextErrors.budgetMin = "Enter a minimum budget.";
+        nextErrors.budgetMin = copy.budgetMinRequired;
       }
       if (!formData.budgetMax.trim()) {
-        nextErrors.budgetMax = "Enter a maximum budget.";
+        nextErrors.budgetMax = copy.budgetMaxRequired;
       }
     }
 
@@ -450,11 +911,11 @@ export function BrandOnboardingShell({
       stepIndex === 5 &&
       formData.inspirationLinks.every((link) => !link.trim())
     ) {
-      nextErrors.inspirationLinks = "Add at least one inspiration link.";
+      nextErrors.inspirationLinks = copy.inspirationRequired;
     }
 
     if (stepIndex === 6 && !formData.campaignDescription.trim()) {
-      nextErrors.campaignDescription = "Campaign description is required.";
+      nextErrors.campaignDescription = copy.campaignDescriptionRequired;
     }
 
     setErrors(nextErrors);
@@ -466,7 +927,7 @@ export function BrandOnboardingShell({
       return;
     }
 
-    if (currentStep === steps.length - 1) {
+    if (currentStep === localizedSteps.length - 1) {
       setSubmitted(true);
       return;
     }
@@ -492,22 +953,20 @@ export function BrandOnboardingShell({
                 <Sparkles className="size-7" />
               </div>
               <p className="mt-6 text-sm font-semibold uppercase tracking-[0.28em] text-teal-700">
-                Campaign draft created
+                {copy.successBadge}
               </p>
               <h1 className="mt-4 text-5xl font-semibold tracking-tight text-slate-950 md:text-6xl">
-                Your onboarding flow is ready.
+                {copy.successTitle}
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-slate-600">
-                The UI is now collecting the brand details, preferences, and
-                campaign brief from the onboarding reference flow in your landing
-                page style.
+                {copy.successDescription}
               </p>
             </div>
 
             <div className="mt-10 grid gap-4 md:grid-cols-3">
               <div className="rounded-[1.4rem] border border-white/85 bg-white/88 p-5">
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-                  Company
+                  {copy.companySummary}
                 </p>
                 <p className="mt-3 text-2xl font-semibold text-slate-950">
                   {formData.companyName}
@@ -518,10 +977,10 @@ export function BrandOnboardingShell({
               </div>
               <div className="rounded-[1.4rem] border border-white/85 bg-white/88 p-5">
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-                  Campaign type
+                  {copy.campaignTypeSummary}
                 </p>
                 <p className="mt-3 text-2xl font-semibold text-slate-950">
-                  {campaignTypes.find((type) => type.id === formData.campaignType)?.label}
+                  {copy.campaignTypes.find((type) => type.id === formData.campaignType)?.label}
                 </p>
                 <p className="mt-1 text-base text-slate-600">
                   ${formData.budgetMin} to ${formData.budgetMax} per post
@@ -529,7 +988,7 @@ export function BrandOnboardingShell({
               </div>
               <div className="rounded-[1.4rem] border border-white/85 bg-white/88 p-5">
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-                  Targeting
+                  {copy.targetingSummary}
                 </p>
                 <p className="mt-3 text-2xl font-semibold text-slate-950">
                   {formData.creatorSlots} spot{formData.creatorSlots === "1" ? "" : "s"}
@@ -549,7 +1008,7 @@ export function BrandOnboardingShell({
                 }}
                 className="inline-flex h-14 items-center justify-center rounded-[1rem] bg-slate-950 px-6 text-base font-semibold text-white transition-colors hover:bg-slate-800"
               >
-                Review onboarding again
+                {copy.reviewAgain}
               </button>
             </div>
           </div>
@@ -568,20 +1027,20 @@ export function BrandOnboardingShell({
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">
-                Create your campaign
+                {copy.createCampaign}
               </p>
               <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl">
                 {currentConfig.title}
               </h1>
             </div>
             <p className="text-sm font-semibold text-slate-500">
-              Step {currentStep + 1} of {steps.length}
+              {copy.stepLabel} {currentStep + 1} {copy.stepOf} {localizedSteps.length}
             </p>
           </div>
 
           {/* <div className="mt-6 overflow-x-auto pb-2">
             <div className="flex min-w-max gap-3">
-              {steps.map((step, index) => {
+              {localizedSteps.map((step, index) => {
                 const Icon = step.icon;
                 const isActive = index === currentStep;
                 const isComplete = index < currentStep;
@@ -615,7 +1074,7 @@ export function BrandOnboardingShell({
                           isActive ? "text-white/72" : "text-slate-400",
                         )}
                       >
-                        Step {index + 1}
+                          {copy.stepLabel} {index + 1}
                       </p>
                       <p className="truncate text-base font-semibold">{step.title}</p>
                     </div>
@@ -637,31 +1096,30 @@ export function BrandOnboardingShell({
                   <div className="space-y-6">
                     <div>
                       <h3 className="text-2xl font-semibold tracking-tight text-slate-950">
-                        Company Details
+                        {copy.companyDetails}
                       </h3>
                       <p className="mt-2 text-base leading-7 text-slate-600">
-                        Tell us about your company. This will be shown to creators
-                        on your campaign listing.
+                        {copy.companyDetailsDescription}
                       </p>
                     </div>
 
                     <div>
-                      <FieldLabel required>Company Name</FieldLabel>
+                      <FieldLabel required>{copy.companyName}</FieldLabel>
                       <TextInput
                         value={formData.companyName}
                         onChange={(value) => updateField("companyName", value)}
-                        placeholder="Your company name"
+                        placeholder={copy.companyName}
                         error={errors.companyName}
                       />
                       <FieldError message={errors.companyName} />
                     </div>
 
                     <div>
-                      <FieldLabel required>Company Website</FieldLabel>
+                      <FieldLabel required>{copy.companyWebsite}</FieldLabel>
                       <TextInput
                         value={formData.companyWebsite}
                         onChange={(value) => updateField("companyWebsite", value)}
-                        placeholder="example.com"
+                        placeholder={copy.websitePlaceholder}
                         error={errors.companyWebsite}
                         type="url"
                       />
@@ -669,13 +1127,13 @@ export function BrandOnboardingShell({
                     </div>
 
                     <div>
-                      <FieldLabel required>Socials</FieldLabel>
+                      <FieldLabel required>{copy.socials}</FieldLabel>
                       <div className="grid gap-3 md:grid-cols-2">
                         <div>
                           <TextInput
                             value={formData.instagram}
                             onChange={(value) => updateField("instagram", value)}
-                            placeholder="Instagram handle or URL"
+                            placeholder={copy.instagramPlaceholder}
                             error={errors.instagram}
                           />
                         </div>
@@ -683,23 +1141,23 @@ export function BrandOnboardingShell({
                           <TextInput
                             value={formData.tiktok}
                             onChange={(value) => updateField("tiktok", value)}
-                            placeholder="TikTok handle or URL"
+                            placeholder={copy.tiktokPlaceholder}
                             error={errors.instagram}
                           />
                         </div>
                       </div>
                       <p className="mt-2 text-sm text-slate-500">
-                        At least one is required. Founder&apos;s socials is also acceptable.
+                        {copy.socialsHelper}
                       </p>
                       <FieldError message={errors.instagram} />
                     </div>
 
                     <div>
-                      <FieldLabel required>Product Type</FieldLabel>
+                      <FieldLabel required>{copy.productType}</FieldLabel>
                       <SelectInput
                         value={formData.productType}
                         onChange={(value) => updateField("productType", value)}
-                        placeholder="Select product type"
+                        placeholder={copy.productType}
                         options={productTypeOptions}
                         error={errors.productType}
                       />
@@ -707,7 +1165,7 @@ export function BrandOnboardingShell({
                     </div>
 
                     <div>
-                      <FieldLabel required>Company Logo</FieldLabel>
+                      <FieldLabel required>{copy.companyLogo}</FieldLabel>
                       <input
                         id={fileInputId}
                         type="file"
@@ -731,10 +1189,10 @@ export function BrandOnboardingShell({
                           <ImagePlus className="size-6" />
                         </div>
                         <p className="mt-4 text-base font-semibold text-slate-950">
-                          {formData.companyLogoName || "Upload your company logo"}
+                          {formData.companyLogoName || copy.uploadLogo}
                         </p>
                         <p className="mt-1 text-sm text-slate-500">
-                          PNG or JPG is enough for this onboarding mock flow.
+                          {copy.logoHelper}
                         </p>
                       </label>
                       <FieldError message={errors.companyLogoName} />
@@ -746,28 +1204,28 @@ export function BrandOnboardingShell({
                   <div className="space-y-6">
                     <div>
                       <h3 className="text-2xl font-semibold tracking-tight text-slate-950">
-                        Personal Info
+                        {copy.personalInfo}
                       </h3>
                       <p className="mt-2 text-base leading-7 text-slate-600">
-                        This information is private and will not be shared with creators.
+                        {copy.personalInfoDescription}
                       </p>
                     </div>
 
                     <div>
-                      <FieldLabel required>Your Name</FieldLabel>
+                      <FieldLabel required>{copy.yourName}</FieldLabel>
                       <TextInput
                         value={formData.contactName}
                         onChange={(value) => updateField("contactName", value)}
-                        placeholder="First and last name"
+                        placeholder={copy.namePlaceholder}
                         error={errors.contactName}
                       />
                       <FieldError message={errors.contactName} />
                     </div>
 
                     <div>
-                      <FieldLabel required>Your Role</FieldLabel>
+                      <FieldLabel required>{copy.yourRole}</FieldLabel>
                       <div className="flex flex-wrap gap-3">
-                        {roleOptions.map((option) => (
+                        {copy.roleOptions.map((option) => (
                           <OptionChip
                             key={option}
                             label={option}
@@ -780,11 +1238,11 @@ export function BrandOnboardingShell({
                     </div>
 
                     <div>
-                      <FieldLabel required>How did you hear about UGC Tank?</FieldLabel>
+                      <FieldLabel required>{copy.heardAbout}</FieldLabel>
                       <TextInput
                         value={formData.referralSource}
                         onChange={(value) => updateField("referralSource", value)}
-                        placeholder="How did you hear about us?"
+                        placeholder={copy.heardAboutPlaceholder}
                         error={errors.referralSource}
                       />
                       <FieldError message={errors.referralSource} />
@@ -796,16 +1254,15 @@ export function BrandOnboardingShell({
                   <div className="space-y-6">
                     <div>
                       <h3 className="text-2xl font-semibold tracking-tight text-slate-950">
-                        Creator Preferences
+                        {copy.creatorPreferences}
                       </h3>
                       <p className="mt-2 text-base leading-7 text-slate-600">
-                        Share your ideal creator profile. All preferences except
-                        ethnicity will be visible on your campaign listing.
+                        {copy.creatorPreferencesDescription}
                       </p>
                     </div>
 
                     <div>
-                      <FieldLabel required>How many spots are available?</FieldLabel>
+                      <FieldLabel required>{copy.creatorSlots}</FieldLabel>
                       <div className="flex flex-wrap gap-3">
                         {creatorSlotOptions.map((option) => (
                           <OptionChip
@@ -820,8 +1277,8 @@ export function BrandOnboardingShell({
                     </div>
 
                     <div>
-                      <FieldLabel required>Creator niche</FieldLabel>
-                      <p className="mb-3 text-sm text-slate-500">Select up to 3.</p>
+                      <FieldLabel required>{copy.creatorNiche}</FieldLabel>
+                      <p className="mb-3 text-sm text-slate-500">{copy.selectUpToThree}</p>
                       <div className="flex flex-wrap gap-3">
                         {creatorNicheOptions.map((option) => (
                           <OptionChip
@@ -844,38 +1301,23 @@ export function BrandOnboardingShell({
                     </div>
 
                     <div>
-                      <FieldLabel>Creator Location</FieldLabel>
+                      <FieldLabel>{copy.creatorLocation}</FieldLabel>
                       <div className="space-y-3">
-                        {creatorLocationOptions.map((option) => (
-                          <button
+                        {copy.creatorLocationOptions.map((option) => (
+                          <ChoiceRow
                             key={option}
-                            type="button"
+                            label={option}
+                            selected={formData.creatorLocation === option}
                             onClick={() => updateField("creatorLocation", option)}
-                            className={cn(
-                              "flex w-full items-center gap-3 rounded-[1rem] border px-4 py-3 text-left transition-colors",
-                              formData.creatorLocation === option
-                                ? "border-slate-950 bg-slate-950 text-white"
-                                : "border-slate-200 bg-white/82 text-slate-700 hover:border-slate-400",
-                            )}
-                          >
-                            <span
-                              className={cn(
-                                "size-4 rounded-full border",
-                                formData.creatorLocation === option
-                                  ? "border-white bg-white"
-                                  : "border-slate-300 bg-white",
-                              )}
-                            />
-                            <span className="text-sm font-medium">{option}</span>
-                          </button>
+                          />
                         ))}
                       </div>
                     </div>
 
                     <div>
-                      <FieldLabel>Creator Age Range</FieldLabel>
+                      <FieldLabel>{copy.creatorAgeRange}</FieldLabel>
                       <p className="mb-3 text-sm text-slate-500">
-                        Leave blank for no preference.
+                        {copy.leaveBlank}
                       </p>
                       <div className="flex flex-wrap gap-3">
                         {creatorAgeOptions.map((option) => (
@@ -890,12 +1332,12 @@ export function BrandOnboardingShell({
                     </div>
 
                     <div>
-                      <FieldLabel>Creator Gender</FieldLabel>
+                      <FieldLabel>{copy.creatorGender}</FieldLabel>
                       <p className="mb-3 text-sm text-slate-500">
-                        Leave blank for no preference.
+                        {copy.leaveBlank}
                       </p>
                       <div className="flex flex-wrap gap-3">
-                        {creatorGenderOptions.map((option) => (
+                        {copy.creatorGenderOptions.map((option) => (
                           <OptionChip
                             key={option}
                             label={option}
@@ -907,12 +1349,12 @@ export function BrandOnboardingShell({
                     </div>
 
                     <div>
-                      <FieldLabel>Creator Ethnicity</FieldLabel>
+                      <FieldLabel>{copy.creatorEthnicity}</FieldLabel>
                       <p className="mb-3 text-sm text-slate-500">
-                        Not shown on your campaign listing. Leave blank for no preference.
+                        {copy.ethnicityHelper}
                       </p>
                       <div className="flex flex-wrap gap-3">
-                        {creatorEthnicityOptions.map((option) => (
+                        {copy.creatorEthnicityOptions.map((option) => (
                           <OptionChip
                             key={option}
                             label={option}
@@ -924,10 +1366,7 @@ export function BrandOnboardingShell({
                     </div>
 
                     <div className="rounded-[1.2rem] border border-amber-200 bg-amber-50 px-4 py-4 text-sm leading-6 text-amber-900">
-                      Creators must match your location, gender, and ethnicity
-                      selections to see your campaign. Niche and age are used to
-                      improve relevance, but do not restrict visibility. The more
-                      filters you apply, the fewer applicants you will receive.
+                      {copy.creatorFiltersWarning}
                     </div>
                   </div>
                 ) : null}
@@ -936,35 +1375,34 @@ export function BrandOnboardingShell({
                   <div className="space-y-6">
                     <div>
                       <h3 className="text-2xl font-semibold tracking-tight text-slate-950">
-                        Deliverables
+                        {copy.deliverables}
                       </h3>
                       <p className="mt-2 text-base leading-7 text-slate-600">
-                        What are the deliverables per creator? This will be shown
-                        to creators on your campaign listing.
+                        {copy.deliverablesDescription}
                       </p>
                     </div>
 
                     <div>
-                      <FieldLabel required>Campaign type</FieldLabel>
+                      <FieldLabel required>{copy.campaignType}</FieldLabel>
                       <div className="space-y-4">
-                        {campaignTypes.map((type) => (
+                        {copy.campaignTypes.map((type) => (
                           <button
                             key={type.id}
                             type="button"
                             onClick={() => updateField("campaignType", type.id)}
                             className={cn(
-                              "w-full rounded-[1.4rem] border px-5 py-5 text-left transition-all",
+                              "w-full rounded-[1.4rem] border px-5 py-5 text-left transition-all shadow-[0_8px_24px_rgba(15,23,42,0.06)]",
                               formData.campaignType === type.id
-                                ? "border-slate-950 bg-slate-950 text-white shadow-[0_18px_40px_rgba(15,23,42,0.18)]"
-                                : "border-slate-200 bg-white/88 text-slate-700 hover:border-slate-400",
+                                ? "border-teal-200 bg-[linear-gradient(180deg,rgba(240,253,250,0.98),rgba(233,250,247,0.95))] text-slate-950 shadow-[0_16px_34px_rgba(13,148,136,0.10)]"
+                                : "border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.94),rgba(248,250,252,0.94))] text-slate-700 hover:border-slate-400 hover:bg-white",
                             )}
                           >
                             <span
                               className={cn(
                                 "inline-flex rounded-full px-3 py-1 text-sm font-semibold",
                                 formData.campaignType === type.id
-                                  ? "bg-white/12 text-white"
-                                  : "bg-slate-100 text-slate-700",
+                                  ? "border border-teal-200 bg-white/80 text-slate-950"
+                                  : "border border-slate-200 bg-white/90 text-slate-700",
                               )}
                             >
                               {type.label}
@@ -977,6 +1415,111 @@ export function BrandOnboardingShell({
                       </div>
                       <FieldError message={errors.campaignType} />
                     </div>
+
+                    {(formData.campaignType === "ugc-program" ||
+                      formData.campaignType === "paid-ads") ? (
+                      <div>
+                        <FieldLabel required>{copy.campaignFrequency}</FieldLabel>
+                        <div className="space-y-3">
+                          {copy.campaignFrequencyOptions
+                            .filter((option) =>
+                              formData.campaignType === "ugc-program"
+                                ? option !== (isPolish ? "Jednorazowo" : "One Time")
+                                : true,
+                            )
+                            .map((option) => (
+                              <ChoiceRow
+                                key={option}
+                                label={option}
+                                selected={formData.campaignFrequency === option}
+                                onClick={() => updateField("campaignFrequency", option)}
+                              />
+                            ))}
+                        </div>
+                        <FieldError message={errors.campaignFrequency} />
+                      </div>
+                    ) : null}
+
+                    <div>
+                      <FieldLabel required>{copy.uniquePosts}</FieldLabel>
+                      <TextInput
+                        value={formData.uniquePosts}
+                        onChange={(value) => updateField("uniquePosts", value)}
+                        placeholder={copy.uniquePostsPlaceholder}
+                        error={errors.uniquePosts}
+                        type="number"
+                      />
+                      <FieldError message={errors.uniquePosts} />
+                    </div>
+
+                    {(formData.campaignType === "ugc-program" ||
+                      formData.campaignType === "influencer-campaign") ? (
+                      <div>
+                        <FieldLabel required>{copy.postingTo}</FieldLabel>
+                        <div className="flex flex-wrap gap-3">
+                          {copy.postingPlatforms.map((platform) => (
+                            <PlatformChip
+                              key={platform.id}
+                              label={platform.label}
+                              icon={platform.icon}
+                              selected={formData.postingPlatforms.includes(platform.id)}
+                              onClick={() => togglePostingPlatform(platform.id)}
+                            />
+                          ))}
+                        </div>
+                        <FieldError message={errors.postingPlatforms} />
+                      </div>
+                    ) : null}
+
+                    {formData.campaignType === "influencer-campaign" ? (
+                      <>
+                        <div>
+                          <FieldLabel required>{copy.minimumFollowers}</FieldLabel>
+                          <div className="space-y-3">
+                            {minimumFollowerOptions.map((option) => (
+                              <ChoiceRow
+                                key={option}
+                                label={option}
+                                selected={formData.minimumFollowerCount === option}
+                                onClick={() =>
+                                  updateField("minimumFollowerCount", option)
+                                }
+                              />
+                            ))}
+                          </div>
+                          <FieldError message={errors.minimumFollowerCount} />
+                        </div>
+
+                        <div>
+                          <FieldLabel>{copy.paidUsage}</FieldLabel>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              updateField(
+                                "includesPaidUsage",
+                                !formData.includesPaidUsage,
+                              )
+                            }
+                            className={cn(
+                              "flex items-center gap-3 rounded-[1rem] border px-4 py-3 text-left transition-colors",
+                              selectionSurface(formData.includesPaidUsage),
+                            )}
+                          >
+                            <span
+                              className={cn(
+                                "size-4 rounded-sm border transition-colors",
+                                formData.includesPaidUsage
+                                  ? "border-teal-500 bg-teal-500/85"
+                                  : "border-slate-300 bg-white",
+                              )}
+                            />
+                            <span className="text-sm font-medium">
+                              {copy.includesPaidUsage}
+                            </span>
+                          </button>
+                        </div>
+                      </>
+                    ) : null}
                   </div>
                 ) : null}
 
@@ -984,46 +1527,41 @@ export function BrandOnboardingShell({
                   <div className="space-y-6">
                     <div>
                       <h3 className="text-2xl font-semibold tracking-tight text-slate-950">
-                        Budget
+                        {copy.budget}
                       </h3>
                       <p className="mt-2 text-base leading-7 text-slate-600">
-                        We vet for quality on both the creator and brand side, so
-                        campaigns with a base pay less than $25 are unlikely to get approved.
+                        {copy.budgetDescription}
                       </p>
                     </div>
 
                     <div className="flex items-start gap-3 rounded-[1.2rem] border border-sky-200 bg-sky-50 px-4 py-4 text-sm leading-6 text-sky-900">
                       <Info className="mt-0.5 size-5 shrink-0" />
-                      <p>
-                        Budget will not be shown to creators for influencer
-                        marketing campaigns. This information is for internal use
-                        and matching.
-                      </p>
+                      <p>{copy.budgetNote}</p>
                     </div>
 
                     <div>
-                      <FieldLabel required>Base Pay Per Post</FieldLabel>
+                      <FieldLabel required>{copy.basePayPerPost}</FieldLabel>
                       <p className="mb-4 text-sm text-slate-500">
-                        Enter the budget range you are willing to pay per post.
+                        {copy.budgetHelper}
                       </p>
                       <div className="grid gap-4 md:grid-cols-2">
                         <div>
-                          <FieldLabel required>Min ($)</FieldLabel>
+                          <FieldLabel required>{copy.minLabel}</FieldLabel>
                           <TextInput
                             value={formData.budgetMin}
                             onChange={(value) => updateField("budgetMin", value)}
-                            placeholder="100"
+                            placeholder={copy.budgetMinPlaceholder}
                             error={errors.budgetMin}
                             type="number"
                           />
                           <FieldError message={errors.budgetMin} />
                         </div>
                         <div>
-                          <FieldLabel required>Max ($)</FieldLabel>
+                          <FieldLabel required>{copy.maxLabel}</FieldLabel>
                           <TextInput
                             value={formData.budgetMax}
                             onChange={(value) => updateField("budgetMax", value)}
-                            placeholder="150"
+                            placeholder={copy.budgetMaxPlaceholder}
                             error={errors.budgetMax}
                             type="number"
                           />
@@ -1038,22 +1576,21 @@ export function BrandOnboardingShell({
                   <div className="space-y-6">
                     <div>
                       <h3 className="text-2xl font-semibold tracking-tight text-slate-950">
-                        Creative Direction
+                        {copy.creativeDirection}
                       </h3>
                       <p className="mt-2 text-base leading-7 text-slate-600">
-                        Share examples of UGC or ads that match the style and
-                        quality you are looking for, ideally your own brand&apos;s content.
+                        {copy.creativeDirectionDescription}
                       </p>
                     </div>
 
                     <div className="space-y-4">
-                      <FieldLabel required>Content Inspiration</FieldLabel>
+                      <FieldLabel required>{copy.contentInspiration}</FieldLabel>
                       {formData.inspirationLinks.map((link, index) => (
                         <TextInput
                           key={`inspiration-${index + 1}`}
                           value={link}
                           onChange={(value) => updateInspirationLink(index, value)}
-                          placeholder="https://..."
+                          placeholder={copy.inspirationPlaceholder}
                           error={errors.inspirationLinks}
                           type="url"
                         />
@@ -1067,16 +1604,15 @@ export function BrandOnboardingShell({
                   <div className="space-y-6">
                     <div>
                       <h3 className="text-2xl font-semibold tracking-tight text-slate-950">
-                        Campaign Description
+                        {copy.campaignDescription}
                       </h3>
                       <p className="mt-2 text-base leading-7 text-slate-600">
-                        Share more about your company and the level of creative
-                        direction you will provide for this campaign.
+                        {copy.campaignDescriptionDescription}
                       </p>
                     </div>
 
                     <div>
-                      <FieldLabel required>Campaign Brief</FieldLabel>
+                      <FieldLabel required>{copy.campaignBrief}</FieldLabel>
                       <textarea
                         value={formData.campaignDescription}
                         onChange={(event) =>
@@ -1085,7 +1621,7 @@ export function BrandOnboardingShell({
                             event.target.value.slice(0, 2000),
                           )
                         }
-                        placeholder="Write a detailed description of your company and campaign"
+                        placeholder={copy.campaignBriefPlaceholder}
                         className={cn(
                           "min-h-72 w-full rounded-[1.3rem] border bg-white/90 px-5 py-4 text-base leading-7 text-slate-950 outline-none transition-colors placeholder:text-slate-400 focus:border-slate-950",
                           errors.campaignDescription ? "border-rose-400" : "border-slate-300",
@@ -1113,15 +1649,15 @@ export function BrandOnboardingShell({
               disabled={currentStep === 0}
             >
               <ArrowLeft className="size-4" />
-              Back
+              {copy.back}
             </button>
             <button
               type="button"
               onClick={handleNext}
               className="inline-flex h-14 items-center justify-center gap-2 rounded-[1rem] bg-slate-950 px-6 text-base font-semibold text-white transition-colors hover:bg-slate-800"
             >
-              {currentStep === steps.length - 1 ? "Create Campaign" : "Next"}
-              {currentStep === steps.length - 1 ? null : <ArrowRight className="size-4" />}
+              {currentStep === localizedSteps.length - 1 ? copy.createCampaign : copy.next}
+              {currentStep === localizedSteps.length - 1 ? null : <ArrowRight className="size-4" />}
             </button>
           </div>
         </div>

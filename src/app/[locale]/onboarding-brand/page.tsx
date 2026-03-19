@@ -1,6 +1,6 @@
+import { PageLocaleChrome } from "@/components/landing/page-locale-chrome";
 import { BrandOnboardingShell } from "@/components/onboarding/brand-onboarding-shell";
 import { SiteFooter } from "@/components/landing/site-footer";
-import { SiteHeader } from "@/components/landing/site-header";
 import { getLandingContent } from "@/lib/get-landing-content";
 import type { AppLocale } from "@/i18n/routing";
 
@@ -28,24 +28,29 @@ export default async function LocalizedOnboardingBrandPage({
   const query = await searchParams;
   const content = await getLandingContent(locale as AppLocale);
   const productTypeOptions =
-    content.getStarted.brand.card.fields?.find(
-      (field) => field.label === "Product type",
-    )?.options ?? [];
+    content.getStarted.brand.card.fields?.find((field) => field.type === "select")
+      ?.options ?? [];
+  const companyName = getFirstValue(query.companyName);
+  const productType = getFirstValue(query.productType);
 
   return (
     <div className="min-h-screen font-sans text-slate-900">
-      <SiteHeader
+      <PageLocaleChrome
         brand={content.brand}
-        nav={content.nav}
-        cta={content.header.primaryCta}
         locale={locale as AppLocale}
         localeSwitcher={content.localeSwitcher}
+        path="/onboarding-brand"
+        searchParams={{
+          ...(companyName ? { companyName } : {}),
+          ...(productType ? { productType } : {}),
+        }}
       />
       <main>
         <BrandOnboardingShell
-          initialCompanyName={getFirstValue(query.companyName)}
-          initialProductType={getFirstValue(query.productType)}
+          initialCompanyName={companyName}
+          initialProductType={productType}
           productTypeOptions={productTypeOptions}
+          locale={locale as AppLocale}
         />
       </main>
       <SiteFooter brand={content.brand} footer={content.footer} />

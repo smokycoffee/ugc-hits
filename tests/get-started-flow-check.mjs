@@ -53,6 +53,7 @@ if (
 }
 
 const routeSource = readFileSync(routePath, "utf8");
+const onboardingRouteSource = readFileSync(onboardingRoutePath, "utf8");
 const getStartedShellSource = readFileSync(
   new URL("../src/components/landing/get-started-shell.tsx", import.meta.url),
   "utf8",
@@ -61,9 +62,18 @@ const onboardingShellSource = readFileSync(
   new URL("../src/components/onboarding/brand-onboarding-shell.tsx", import.meta.url),
   "utf8",
 );
+const localeChromeSource = readFileSync(
+  new URL("../src/components/landing/page-locale-chrome.tsx", import.meta.url),
+  "utf8",
+);
 
 if (!routeSource.includes("GetStartedShell")) {
   console.error("Expected get-started route to render the get-started shell.");
+  process.exit(1);
+}
+
+if (routeSource.includes("SiteHeader") || onboardingRouteSource.includes("SiteHeader")) {
+  console.error("Expected get-started and onboarding-brand routes to hide the shared navbar.");
   process.exit(1);
 }
 
@@ -81,6 +91,22 @@ if (
 }
 
 if (
+  getStartedShellSource.includes('field.label === "Company name"') ||
+  getStartedShellSource.includes('field.label === "Product type"')
+) {
+  console.error("Expected get-started shell field wiring to avoid English-only label matching.");
+  process.exit(1);
+}
+
+if (
+  !getStartedShellSource.includes('return `/${locale}${path}`;') ||
+  !localeChromeSource.includes('return `/${locale}${path}`;')
+) {
+  console.error("Expected locale path helpers to always preserve the explicit locale segment.");
+  process.exit(1);
+}
+
+if (
   !getStartedShellSource.includes("URLSearchParams") ||
   !getStartedShellSource.includes("router.push")
 ) {
@@ -93,6 +119,11 @@ if (
   onboardingShellSource.includes("This page follows the seven-step onboarding reference")
 ) {
   console.error("Expected onboarding shell hero copy to be removed.");
+  process.exit(1);
+}
+
+if (onboardingShellSource.includes("UGC Tank")) {
+  console.error("Expected onboarding shell copy to use UGC Hits instead of UGC Tank.");
   process.exit(1);
 }
 
