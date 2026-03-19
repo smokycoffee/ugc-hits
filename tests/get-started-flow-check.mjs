@@ -14,9 +14,18 @@ const routePath = new URL(
   "../src/app/[locale]/get-started/page.tsx",
   import.meta.url,
 );
+const onboardingRoutePath = new URL(
+  "../src/app/[locale]/onboarding-brand/page.tsx",
+  import.meta.url,
+);
 
 if (!existsSync(routePath)) {
   console.error("Expected localized get-started route to exist.");
+  process.exit(1);
+}
+
+if (!existsSync(onboardingRoutePath)) {
+  console.error("Expected localized onboarding-brand route to exist.");
   process.exit(1);
 }
 
@@ -44,10 +53,86 @@ if (
 }
 
 const routeSource = readFileSync(routePath, "utf8");
+const onboardingRouteSource = readFileSync(onboardingRoutePath, "utf8");
+const getStartedShellSource = readFileSync(
+  new URL("../src/components/landing/get-started-shell.tsx", import.meta.url),
+  "utf8",
+);
+const onboardingShellSource = readFileSync(
+  new URL("../src/components/onboarding/brand-onboarding-shell.tsx", import.meta.url),
+  "utf8",
+);
+const localeChromeSource = readFileSync(
+  new URL("../src/components/landing/page-locale-chrome.tsx", import.meta.url),
+  "utf8",
+);
 
 if (!routeSource.includes("GetStartedShell")) {
   console.error("Expected get-started route to render the get-started shell.");
   process.exit(1);
 }
 
-console.log("Verified navbar CTA and simplified get-started copy.");
+if (routeSource.includes("SiteHeader") || onboardingRouteSource.includes("SiteHeader")) {
+  console.error("Expected get-started and onboarding-brand routes to hide the shared navbar.");
+  process.exit(1);
+}
+
+if (!getStartedShellSource.includes("onboarding-brand")) {
+  console.error("Expected get-started shell to navigate to onboarding-brand.");
+  process.exit(1);
+}
+
+if (
+  !getStartedShellSource.includes("companyName") ||
+  !getStartedShellSource.includes("productType")
+) {
+  console.error("Expected get-started shell to capture companyName and productType.");
+  process.exit(1);
+}
+
+if (
+  getStartedShellSource.includes('field.label === "Company name"') ||
+  getStartedShellSource.includes('field.label === "Product type"')
+) {
+  console.error("Expected get-started shell field wiring to avoid English-only label matching.");
+  process.exit(1);
+}
+
+if (
+  !getStartedShellSource.includes('return `/${locale}${path}`;') ||
+  !localeChromeSource.includes('return `/${locale}${path}`;')
+) {
+  console.error("Expected locale path helpers to always preserve the explicit locale segment.");
+  process.exit(1);
+}
+
+if (
+  !getStartedShellSource.includes("URLSearchParams") ||
+  !getStartedShellSource.includes("router.push")
+) {
+  console.error("Expected get-started shell to push onboarding-brand query params.");
+  process.exit(1);
+}
+
+if (
+  onboardingShellSource.includes("inside the landing flow.") ||
+  onboardingShellSource.includes("This page follows the seven-step onboarding reference")
+) {
+  console.error("Expected onboarding shell hero copy to be removed.");
+  process.exit(1);
+}
+
+if (onboardingShellSource.includes("UGC Tank")) {
+  console.error("Expected onboarding shell copy to use UGC Hits instead of UGC Tank.");
+  process.exit(1);
+}
+
+if (
+  !onboardingShellSource.includes("overflow-x-auto") ||
+  !onboardingShellSource.includes("Create your campaign")
+) {
+  console.error("Expected onboarding shell to render a horizontal step rail with the campaign heading.");
+  process.exit(1);
+}
+
+console.log("Verified get-started copy, onboarding-brand route, brand handoff, and simplified onboarding layout.");

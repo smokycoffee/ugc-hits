@@ -1,6 +1,6 @@
 import { GetStartedShell } from "@/components/landing/get-started-shell";
+import { PageLocaleChrome } from "@/components/landing/page-locale-chrome";
 import { SiteFooter } from "@/components/landing/site-footer";
-import { SiteHeader } from "@/components/landing/site-header";
 import { getLandingContent } from "@/lib/get-landing-content";
 import type { AppLocale } from "@/i18n/routing";
 
@@ -14,15 +14,17 @@ export default async function LocalizedGetStartedPage({ params }: Props) {
 
   return (
     <div className="min-h-screen font-sans text-slate-900">
-      <SiteHeader
+      <PageLocaleChrome
         brand={content.brand}
-        nav={content.nav}
-        cta={content.header.primaryCta}
         locale={locale as AppLocale}
         localeSwitcher={content.localeSwitcher}
+        path="/get-started"
       />
       <main>
-        <GetStartedShell content={content.getStarted} />
+        <GetStartedShell
+          content={content.getStarted}
+          locale={locale as AppLocale}
+        />
       </main>
       <SiteFooter brand={content.brand} footer={content.footer} />
     </div>
