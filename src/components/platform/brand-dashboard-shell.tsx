@@ -106,7 +106,7 @@ export function BrandDashboardShell({
   ];
   const utilityNav: NavItem[] = [
     {
-      label: "Accounts",
+      label: "Account",
       href: getLocalizedPath(locale, "/dashboard/brand/accounts"),
       icon: Settings2,
     },
@@ -124,13 +124,8 @@ export function BrandDashboardShell({
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.34em] text-teal-200/90">
             UGC Hits
           </p>
-          <h1 className="mt-3 font-serif text-2xl leading-none text-white">
-            Brand
-            <br />
-            Dashboard
-          </h1>
-          <p className="mt-4 text-sm leading-6 text-slate-300">{brandName}</p>
-          <p className="mt-1 text-xs text-slate-400">{profileEmail}</p>
+         
+          <h2 className="mt-4 text-sm leading-6 text-slate-300">{brandName}</h2>
         </div>
 
         <nav className="mt-6 space-y-2">
@@ -145,14 +140,14 @@ export function BrandDashboardShell({
               <DashboardNavLink key={item.href} item={item} pathname={pathname} />
             ))}
           </nav>
-          <form action="/auth/signout" method="post">
+          {/* <form action="/auth/signout" method="post">
             <button
               type="submit"
               className="w-full rounded-[1rem] border border-white/14 bg-white/8 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/12"
             >
               Sign out
             </button>
-          </form>
+          </form> */}
         </div>
       </aside>
 
@@ -170,17 +165,9 @@ export function BrandDashboardShell({
                       <h1 className="font-serif text-2xl leading-none text-slate-950">
                         Brand Dashboard
                       </h1>
-                      <p className="mt-3 text-sm text-slate-600">{brandName}</p>
-                      <p className="mt-1 text-xs text-slate-500">{profileEmail}</p>
+                      <h2 className="mt-3 text-sm text-slate-600">{brandName}</h2>
                     </div>
-                    <form action="/auth/signout" method="post">
-                      <button
-                        type="submit"
-                        className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700"
-                      >
-                        Sign out
-                      </button>
-                    </form>
+                   
                   </div>
 
                   <nav className="mt-4 grid gap-2 sm:grid-cols-2">
