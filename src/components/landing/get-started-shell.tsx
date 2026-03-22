@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 
 import type { LandingContent } from "@/lib/get-landing-content";
 import type { AppLocale } from "@/i18n/routing";
+import { buildBrandLoginPath } from "@/lib/platform/brand-onboarding";
 
 type AudienceKey = "brand" | "creator";
 
@@ -27,10 +28,6 @@ type BrandLeadState = {
 };
 
 type BrandLeadErrors = Partial<Record<keyof BrandLeadState, string>>;
-
-function getLocalizedPath(locale: AppLocale, path: string) {
-  return `/${locale}${path}`;
-}
 
 function getBenefitIcon(icon: string) {
   switch (icon) {
@@ -59,6 +56,8 @@ export function GetStartedShell({ content, locale }: GetStartedShellProps) {
   });
   const [brandErrors, setBrandErrors] = useState<BrandLeadErrors>({});
   const router = useRouter();
+  const creatorApplicationUrl =
+    process.env.NEXT_PUBLIC_CREATOR_APPLICATION_URL ?? "";
   const audience = content[activeAudience];
   const accentTone =
     activeAudience === "brand" ? "text-teal-700" : "text-sky-800";
@@ -92,6 +91,9 @@ export function GetStartedShell({ content, locale }: GetStartedShellProps) {
 
   function handlePrimaryAction() {
     if (activeAudience !== "brand") {
+      if (creatorApplicationUrl) {
+        window.location.href = creatorApplicationUrl;
+      }
       return;
     }
 
@@ -111,14 +113,18 @@ export function GetStartedShell({ content, locale }: GetStartedShellProps) {
       return;
     }
 
-    const params = new URLSearchParams({
-      companyName: brandLead.companyName.trim(),
-      productType: brandLead.productType.trim(),
-    });
-
     router.push(
-      `${getLocalizedPath(locale, "/onboarding-brand")}?${params.toString()}`,
+      buildBrandLoginPath(locale, {
+        companyName: brandLead.companyName,
+        productType: brandLead.productType,
+      }),
     );
+  }
+
+  function handleSecondaryAction() {
+    if (activeAudience === "creator") {
+      router.push(`/${locale}/invite`);
+    }
   }
 
   return (
@@ -280,6 +286,7 @@ export function GetStartedShell({ content, locale }: GetStartedShellProps) {
                   {audience.card.secondaryPrefix}{" "}
                   <button
                     type="button"
+                    onClick={handleSecondaryAction}
                     className="font-semibold text-slate-950 transition-colors hover:text-slate-700"
                   >
                     {audience.card.secondaryAction}
