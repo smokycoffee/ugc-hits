@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { redirect } from "next/navigation";
 
 import type { AppLocale } from "@/i18n/routing";
@@ -153,7 +154,7 @@ export async function requireRole(
   return session;
 }
 
-export async function getBrandDashboard(locale: AppLocale) {
+export const getBrandDashboard = cache(async function getBrandDashboard(locale: AppLocale) {
   const { supabase, profile } = await requireRole(locale, "brand");
   const { data: brand, error: brandError } = await supabase
     .from("brands")
@@ -204,7 +205,7 @@ export async function getBrandDashboard(locale: AppLocale) {
     notifications: (notifications ?? []) as NotificationSummary[],
     unreadCount: unreadCount ?? 0,
   };
-}
+});
 
 export async function getBrandOnboarding(locale: AppLocale) {
   const { supabase, profile } = await requireRole(locale, "brand");
