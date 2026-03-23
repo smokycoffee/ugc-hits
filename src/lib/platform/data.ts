@@ -4,6 +4,11 @@ import { redirect } from "next/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import { createClient } from "@/lib/supabase/server";
 import {
+  attachInviteCodes,
+  type AdminInviteRecord,
+  type InviteEmailJobRecord,
+} from "@/lib/platform/admin-invites";
+import {
   getDashboardPathForRole,
   getLocalizedPath,
 } from "@/lib/platform/utils";
@@ -100,12 +105,7 @@ export type CreatorApplicationSummary = {
   } | null;
 };
 
-export type InviteSummary = {
-  id: string;
-  email: string;
-  status: string;
-  expires_at: string;
-};
+export type InviteSummary = AdminInviteRecord;
 
 export type ConversationMessageSummary = {
   id: string;
@@ -280,6 +280,11 @@ export async function getAdminInvites(locale: AppLocale) {
     .from("platform_invites")
     .select("*")
     .order("created_at", { ascending: false });
+  const { data: emailJobs } = await supabase
+    .from("email_jobs")
+    .select("created_at, payload")
+    .eq("template", "platform_invite")
+    .order("created_at", { ascending: false });
   const hasAdminAccess = profile.role === "admin";
   const { count: adminCount } = await supabase
     .from("profiles")
@@ -288,7 +293,10 @@ export async function getAdminInvites(locale: AppLocale) {
 
   return {
     profile,
-    invites: (invites ?? []) as InviteSummary[],
+    invites: attachInviteCodes(
+      (invites ?? []) as InviteSummary[],
+      (emailJobs ?? []) as InviteEmailJobRecord[],
+    ),
     hasAdminAccess,
     hasAnyAdmin: (adminCount ?? 0) > 0,
   };

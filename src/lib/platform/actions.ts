@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 import type { AppLocale } from "@/i18n/routing";
 import {
-  buildBrandMagicLinkRedirect,
+  buildMagicLinkRedirect,
   buildCreatorInviteRedirect,
 } from "@/lib/platform/auth-redirects";
 import {
@@ -14,6 +14,7 @@ import {
   resolveBrandAuthNextPath,
 } from "@/lib/platform/brand-onboarding";
 import { hashInviteCode } from "@/lib/platform/invite-code";
+import { resolveSharedLoginTarget } from "@/lib/platform/login-flow";
 import { getLocalizedPath } from "@/lib/platform/utils";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getAppUrl } from "@/lib/supabase/env";
@@ -71,18 +72,37 @@ export async function sendBrandMagicLink(formData: FormData) {
   const email = getStringValue(formData, "email").toLowerCase();
   const companyName = getStringValue(formData, "companyName");
   const productType = getStringValue(formData, "productType");
-  const next = resolveBrandAuthNextPath(locale, getStringValue(formData, "next"), {
+  const next = getStringValue(formData, "next");
+  const admin = createAdminClient();
+  const { data: existingProfile } = await admin
+    .from("profiles")
+    .select("role")
+    .eq("email", email)
+    .maybeSingle();
+  const target = resolveSharedLoginTarget(locale, {
+    next,
     companyName,
     productType,
+    existingRole:
+      existingProfile?.role === "brand" ||
+      existingProfile?.role === "creator" ||
+      existingProfile?.role === "admin"
+        ? existingProfile.role
+        : null,
   });
   const supabase = await createClient();
 
   const { error } = await supabase.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: buildBrandMagicLinkRedirect(getAppUrl(), locale, next),
+      emailRedirectTo: buildMagicLinkRedirect(
+        getAppUrl(),
+        locale,
+        target.role,
+        target.next,
+      ),
       data: {
-        role: "brand",
+        role: target.role,
       },
     },
   });

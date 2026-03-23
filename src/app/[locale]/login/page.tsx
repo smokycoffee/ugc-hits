@@ -22,18 +22,27 @@ export default async function LoginPage({ params, searchParams }: Props) {
 
   return (
     <PlatformPageShell
-      eyebrow="Brand Access"
-      title="Sign in to manage campaigns, applicants, and messages."
+      eyebrow="Login to UGC Hits"
+      title="Sign in"
       description="Brands can use Google login or a passwordless email link. Creator activation happens through invite-only redemption."
       profileLabel={`Locale: ${(locale as AppLocale).toUpperCase()}`}
     >
-      <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="mx-auto max-w-2xl space-y-4">
+        {sent ? (
+          <p className="rounded-[1rem] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+            Magic link sent. Check your inbox.
+          </p>
+        ) : null}
+        {error ? (
+          <p className="rounded-[1rem] border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+            {decodeURIComponent(error)}
+          </p>
+        ) : null}
+
         <section className="rounded-[1.6rem] border border-slate-200 bg-slate-50 p-6">
-          <h2 className="text-xl font-semibold text-slate-950">
-            Brand magic link
-          </h2>
+          <h2 className="text-xl font-semibold text-slate-950">Magic link</h2>
           <p className="mt-2 text-sm leading-6 text-slate-600">
-            Send a sign-in link to the email you use for your brand account.
+            Send a sign-in link to email.
           </p>
           <form action={sendBrandMagicLink} className="mt-5 space-y-4">
             <input type="hidden" name="locale" value={locale} />
@@ -44,24 +53,22 @@ export default async function LoginPage({ params, searchParams }: Props) {
               name="email"
               type="email"
               required
-              placeholder="brand@company.com"
+              placeholder="you@company.com"
               className="h-12 w-full rounded-[1rem] border border-slate-300 bg-white px-4 text-base text-slate-950 outline-none"
             />
             <button
               type="submit"
               className="h-12 w-full rounded-[1rem] bg-slate-950 text-sm font-semibold text-white"
             >
-              Send magic link
+              Send sign-in link
             </button>
           </form>
         </section>
 
         <section className="rounded-[1.6rem] border border-slate-200 bg-white p-6">
-          <h2 className="text-xl font-semibold text-slate-950">
-            Google login
-          </h2>
+          <h2 className="text-xl font-semibold text-slate-950">Google login</h2>
           <p className="mt-2 text-sm leading-6 text-slate-600">
-            Use Google for faster brand access if that is already your team login.
+            Use Google for brand access if that is already your team login.
           </p>
           <form action={startGoogleBrandLogin} className="mt-5">
             <input type="hidden" name="locale" value={locale} />
@@ -75,16 +82,6 @@ export default async function LoginPage({ params, searchParams }: Props) {
               Continue with Google
             </button>
           </form>
-          {sent ? (
-            <p className="mt-4 rounded-[1rem] bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-              Magic link sent. Check your inbox.
-            </p>
-          ) : null}
-          {error ? (
-            <p className="mt-4 rounded-[1rem] bg-rose-50 px-4 py-3 text-sm text-rose-700">
-              {decodeURIComponent(error)}
-            </p>
-          ) : null}
         </section>
       </div>
     </PlatformPageShell>

@@ -105,6 +105,11 @@ export default async function AdminInvitesPage({ params }: Props) {
                         <p className="mt-1 text-xs uppercase tracking-[0.22em] text-slate-400">
                           {invite.status} · expires {new Date(invite.expires_at).toLocaleDateString()}
                         </p>
+                        {invite.status === "pending" ? (
+                          <p className="mt-2 font-mono text-xs tracking-[0.18em] text-slate-700">
+                            Code: {invite.invite_code ?? "Unavailable"}
+                          </p>
+                        ) : null}
                       </div>
                       {invite.status === "pending" ? (
                         <form action={revokeInviteAction}>
