@@ -22,14 +22,22 @@ export default async function AdminInvitesPage({ params }: Props) {
       description="Approve creators off-platform, issue invite codes, and revoke pending access without changing the underlying schema."
       profileLabel={data.profile.email}
       actions={
-        <form action="/auth/signout" method="post">
-          <button
-            type="submit"
-            className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700"
+        <div className="space-y-2">
+          <a
+            href={`/${locale}/admin/matches`}
+            className="inline-flex rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700"
           >
-            Sign out
-          </button>
-        </form>
+            Manual matching
+          </a>
+          <form action="/auth/signout" method="post">
+            <button
+              type="submit"
+              className="w-full rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700"
+            >
+              Sign out
+            </button>
+          </form>
+        </div>
       }
     >
       {!data.hasAdminAccess ? (

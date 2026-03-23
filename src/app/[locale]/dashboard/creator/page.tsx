@@ -3,6 +3,7 @@ import { NotificationFeed } from "@/components/platform/notification-feed";
 import { PlatformPageShell } from "@/components/platform/page-shell";
 import { RealtimeSync } from "@/components/platform/realtime-sync";
 import { applyToCampaignAction } from "@/lib/platform/actions";
+import { getCreatorDashboardPageState } from "@/lib/platform/creator-dashboard";
 import {
   getCreatorDashboard,
   type CreatorApplicationSummary,
@@ -12,11 +13,19 @@ import {
 
 type Props = {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{
+    applied?: string;
+    error?: string;
+  }>;
 };
 
-export default async function CreatorDashboardPage({ params }: Props) {
+export default async function CreatorDashboardPage({
+  params,
+  searchParams,
+}: Props) {
   const { locale } = await params;
   const data = await getCreatorDashboard(locale as AppLocale);
+  const pageState = getCreatorDashboardPageState(await searchParams);
 
   return (
     <PlatformPageShell
@@ -36,6 +45,18 @@ export default async function CreatorDashboardPage({ params }: Props) {
       }
     >
       <RealtimeSync profileId={data.profile.id} />
+      <div className="space-y-4">
+        {pageState.applied ? (
+          <p className="rounded-[1rem] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+            Application submitted. The brand can now review it from their dashboard.
+          </p>
+        ) : null}
+        {pageState.error ? (
+          <p className="rounded-[1rem] border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+            {pageState.error}
+          </p>
+        ) : null}
+      </div>
       <div className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
         <div className="space-y-6">
           <section className="rounded-[1.6rem] border border-slate-200 bg-white p-5">

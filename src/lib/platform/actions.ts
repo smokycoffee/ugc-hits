@@ -8,6 +8,7 @@ import {
   buildMagicLinkRedirect,
   buildCreatorInviteRedirect,
 } from "@/lib/platform/auth-redirects";
+import { runMatchCampaignToCreator } from "@/lib/platform/admin-matches";
 import {
   buildBrandLoginPath,
   buildBrandOnboardingPath,
@@ -423,4 +424,22 @@ export async function revokeInviteAction(formData: FormData) {
 
   revalidatePath(getLocalizedPath(locale, "/admin/invites"));
   redirect(`${getLocalizedPath(locale, "/admin/invites")}?revoked=invite`);
+}
+
+export async function matchCampaignToCreatorAction(formData: FormData) {
+  const locale = getLocale(formData);
+  const supabase = await createClient();
+  const result = await runMatchCampaignToCreator(
+    {
+      locale,
+      campaignId: getStringValue(formData, "campaignId"),
+      creatorId: getStringValue(formData, "creatorId"),
+    },
+    {
+      rpc: async (fn, args) => supabase.rpc(fn, args),
+      revalidatePath,
+    },
+  );
+
+  redirect(result.redirectPath);
 }
