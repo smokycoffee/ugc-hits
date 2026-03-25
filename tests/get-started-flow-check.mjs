@@ -66,6 +66,10 @@ const localeChromeSource = readFileSync(
   new URL("../src/components/landing/page-locale-chrome.tsx", import.meta.url),
   "utf8",
 );
+const platformUtilsSource = readFileSync(
+  new URL("../src/lib/platform/utils.ts", import.meta.url),
+  "utf8",
+);
 
 if (!routeSource.includes("GetStartedShell")) {
   console.error("Expected get-started route to render the get-started shell.");
@@ -77,8 +81,8 @@ if (routeSource.includes("SiteHeader") || onboardingRouteSource.includes("SiteHe
   process.exit(1);
 }
 
-if (!getStartedShellSource.includes("onboarding-brand")) {
-  console.error("Expected get-started shell to navigate to onboarding-brand.");
+if (!getStartedShellSource.includes("buildBrandLoginPath")) {
+  console.error("Expected get-started shell to navigate to login first.");
   process.exit(1);
 }
 
@@ -99,18 +103,39 @@ if (
 }
 
 if (
-  !getStartedShellSource.includes('return `/${locale}${path}`;') ||
+  !platformUtilsSource.includes('return `/${locale}${path}`;') ||
   !localeChromeSource.includes('return `/${locale}${path}`;')
 ) {
   console.error("Expected locale path helpers to always preserve the explicit locale segment.");
   process.exit(1);
 }
 
+if (!getStartedShellSource.includes("router.push")) {
+  console.error("Expected get-started shell to push login query params.");
+  process.exit(1);
+}
+
+const loginRouteSource = readFileSync(
+  new URL("../src/app/[locale]/login/page.tsx", import.meta.url),
+  "utf8",
+);
+
 if (
-  !getStartedShellSource.includes("URLSearchParams") ||
-  !getStartedShellSource.includes("router.push")
+  !loginRouteSource.includes('name="next"') ||
+  !loginRouteSource.includes('name="companyName"') ||
+  !loginRouteSource.includes('name="productType"')
 ) {
-  console.error("Expected get-started shell to push onboarding-brand query params.");
+  console.error("Expected login page to preserve onboarding handoff params.");
+  process.exit(1);
+}
+
+const brandDashboardSource = readFileSync(
+  new URL("../src/app/[locale]/dashboard/brand/page.tsx", import.meta.url),
+  "utf8",
+);
+
+if (brandDashboardSource.includes("Create campaign")) {
+  console.error("Expected brand dashboard create form UI to be removed.");
   process.exit(1);
 }
 

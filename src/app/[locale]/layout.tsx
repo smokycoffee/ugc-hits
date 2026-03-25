@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 
-import "../globals.css";
 import { routing, type AppLocale } from "@/i18n/routing";
 
 type Props = {
@@ -23,9 +22,5 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   setRequestLocale(locale);
 
-  return (
-    <html lang={locale}>
-      <body className="antialiased">{children}</body>
-    </html>
-  );
+  return <>{children}</>;
 }

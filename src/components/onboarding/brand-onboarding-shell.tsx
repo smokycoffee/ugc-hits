@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState, type ReactNode } from "react";
+import { useFormStatus } from "react-dom";
 import {
   ArrowLeft,
   ArrowRight,
@@ -14,19 +15,18 @@ import {
   Info,
   Music2,
   PencilRuler,
-  Sparkles,
   UsersRound,
   Youtube,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import type { AppLocale } from "@/i18n/routing";
+import { saveBrandOnboardingAction } from "@/lib/platform/actions";
 
 type StepIcon =
   | typeof Building2
   | typeof BriefcaseBusiness
   | typeof UsersRound
-  | typeof BadgeCheck
   | typeof PencilRuler
   | typeof Globe
   | typeof FileText;
@@ -41,8 +41,7 @@ type StepConfig = {
 };
 
 type BrandOnboardingShellProps = {
-  initialCompanyName: string;
-  initialProductType: string;
+  initialValues?: Partial<BrandOnboardingForm>;
   productTypeOptions: string[];
   locale: AppLocale;
 };
@@ -219,35 +218,38 @@ const postingPlatforms = [
 const minimumFollowerOptions = ["10K+", "25K+", "50K+", "100K+", "250K+"];
 
 function createInitialFormState(
-  initialCompanyName: string,
-  initialProductType: string,
+  initialValues?: Partial<BrandOnboardingForm>,
 ): BrandOnboardingForm {
   return {
-    companyName: initialCompanyName,
-    companyWebsite: "",
-    instagram: "",
-    tiktok: "",
-    productType: initialProductType,
-    companyLogoName: "",
-    contactName: "",
-    role: "",
-    referralSource: "",
-    creatorSlots: "",
-    creatorNiches: [],
-    creatorLocation: "Any country",
-    creatorAgeRanges: [],
-    creatorGenders: [],
-    creatorEthnicities: [],
-    campaignType: "",
-    campaignFrequency: "",
-    budgetMin: "",
-    budgetMax: "",
-    inspirationLinks: ["", "", ""],
-    campaignDescription: "",
-    uniquePosts: "",
-    postingPlatforms: [],
-    minimumFollowerCount: "",
-    includesPaidUsage: false,
+    companyName: initialValues?.companyName ?? "",
+    companyWebsite: initialValues?.companyWebsite ?? "",
+    instagram: initialValues?.instagram ?? "",
+    tiktok: initialValues?.tiktok ?? "",
+    productType: initialValues?.productType ?? "",
+    companyLogoName: initialValues?.companyLogoName ?? "",
+    contactName: initialValues?.contactName ?? "",
+    role: initialValues?.role ?? "",
+    referralSource: initialValues?.referralSource ?? "",
+    creatorSlots: initialValues?.creatorSlots ?? "",
+    creatorNiches: initialValues?.creatorNiches ?? [],
+    creatorLocation: initialValues?.creatorLocation ?? "Any country",
+    creatorAgeRanges: initialValues?.creatorAgeRanges ?? [],
+    creatorGenders: initialValues?.creatorGenders ?? [],
+    creatorEthnicities: initialValues?.creatorEthnicities ?? [],
+    campaignType: initialValues?.campaignType ?? "",
+    campaignFrequency: initialValues?.campaignFrequency ?? "",
+    budgetMin: initialValues?.budgetMin ?? "",
+    budgetMax: initialValues?.budgetMax ?? "",
+    inspirationLinks: [
+      initialValues?.inspirationLinks?.[0] ?? "",
+      initialValues?.inspirationLinks?.[1] ?? "",
+      initialValues?.inspirationLinks?.[2] ?? "",
+    ],
+    campaignDescription: initialValues?.campaignDescription ?? "",
+    uniquePosts: initialValues?.uniquePosts ?? "",
+    postingPlatforms: initialValues?.postingPlatforms ?? [],
+    minimumFollowerCount: initialValues?.minimumFollowerCount ?? "",
+    includesPaidUsage: initialValues?.includesPaidUsage ?? false,
   };
 }
 
@@ -423,9 +425,102 @@ function PlatformChip({
   );
 }
 
+function FormHiddenInputs({
+  locale,
+  formData,
+}: {
+  locale: AppLocale;
+  formData: BrandOnboardingForm;
+}) {
+  return (
+    <>
+      <input type="hidden" name="locale" value={locale} />
+      <input type="hidden" name="companyName" value={formData.companyName} />
+      <input type="hidden" name="companyWebsite" value={formData.companyWebsite} />
+      <input type="hidden" name="instagram" value={formData.instagram} />
+      <input type="hidden" name="tiktok" value={formData.tiktok} />
+      <input type="hidden" name="productType" value={formData.productType} />
+      <input type="hidden" name="companyLogoName" value={formData.companyLogoName} />
+      <input type="hidden" name="contactName" value={formData.contactName} />
+      <input type="hidden" name="role" value={formData.role} />
+      <input type="hidden" name="referralSource" value={formData.referralSource} />
+      <input type="hidden" name="creatorSlots" value={formData.creatorSlots} />
+      <input type="hidden" name="creatorLocation" value={formData.creatorLocation} />
+      <input type="hidden" name="campaignType" value={formData.campaignType} />
+      <input type="hidden" name="campaignFrequency" value={formData.campaignFrequency} />
+      <input type="hidden" name="budgetMin" value={formData.budgetMin} />
+      <input type="hidden" name="budgetMax" value={formData.budgetMax} />
+      <input type="hidden" name="campaignDescription" value={formData.campaignDescription} />
+      <input type="hidden" name="uniquePosts" value={formData.uniquePosts} />
+      <input
+        type="hidden"
+        name="minimumFollowerCount"
+        value={formData.minimumFollowerCount}
+      />
+      <input
+        type="hidden"
+        name="includesPaidUsage"
+        value={formData.includesPaidUsage ? "true" : "false"}
+      />
+      {formData.creatorNiches.map((value) => (
+        <input key={`creator-niche-${value}`} type="hidden" name="creatorNiches" value={value} />
+      ))}
+      {formData.creatorAgeRanges.map((value) => (
+        <input key={`creator-age-${value}`} type="hidden" name="creatorAgeRanges" value={value} />
+      ))}
+      {formData.creatorGenders.map((value) => (
+        <input key={`creator-gender-${value}`} type="hidden" name="creatorGenders" value={value} />
+      ))}
+      {formData.creatorEthnicities.map((value) => (
+        <input
+          key={`creator-ethnicity-${value}`}
+          type="hidden"
+          name="creatorEthnicities"
+          value={value}
+        />
+      ))}
+      {formData.postingPlatforms.map((value) => (
+        <input
+          key={`posting-platform-${value}`}
+          type="hidden"
+          name="postingPlatforms"
+          value={value}
+        />
+      ))}
+      {formData.inspirationLinks.map((value, index) => (
+        <input
+          key={`inspiration-link-${index + 1}`}
+          type="hidden"
+          name="inspirationLinks"
+          value={value}
+        />
+      ))}
+    </>
+  );
+}
+
+function FinalSubmitButton({
+  label,
+  pendingLabel,
+}: {
+  label: string;
+  pendingLabel: string;
+}) {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      className="inline-flex h-14 items-center justify-center gap-2 rounded-[1rem] bg-slate-950 px-6 text-base font-semibold text-white transition-colors hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
+      disabled={pending}
+    >
+      {pending ? pendingLabel : label}
+    </button>
+  );
+}
+
 export function BrandOnboardingShell({
-  initialCompanyName,
-  initialProductType,
+  initialValues,
   productTypeOptions,
   locale,
 }: BrandOnboardingShellProps) {
@@ -519,6 +614,7 @@ export function BrandOnboardingShell({
         budgetMaxPlaceholder: "150",
         inspirationPlaceholder: "https://...",
         campaignBriefPlaceholder: "Napisz szczegółowy opis firmy i kampanii",
+        submitting: "Zapisywanie kampanii...",
         reviewCampaign: "Przejrzyj kampanię ponownie",
         companyNameRequired: "Nazwa firmy jest wymagana.",
         companyWebsiteRequired: "Strona firmy jest wymagana.",
@@ -672,6 +768,7 @@ export function BrandOnboardingShell({
         budgetMaxPlaceholder: "150",
         inspirationPlaceholder: "https://...",
         campaignBriefPlaceholder: "Write a detailed description of your company and campaign",
+        submitting: "Saving campaign...",
         reviewCampaign: "Review campaign again",
         companyNameRequired: "Company name is required.",
         companyWebsiteRequired: "Company website is required.",
@@ -702,10 +799,9 @@ export function BrandOnboardingShell({
       };
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<BrandOnboardingForm>(() =>
-    createInitialFormState(initialCompanyName, initialProductType),
+    createInitialFormState(initialValues),
   );
   const [errors, setErrors] = useState<ErrorState>({});
-  const [submitted, setSubmitted] = useState(false);
   const fileInputId = useId();
 
   const localizedSteps = isPolish
@@ -927,11 +1023,6 @@ export function BrandOnboardingShell({
       return;
     }
 
-    if (currentStep === localizedSteps.length - 1) {
-      setSubmitted(true);
-      return;
-    }
-
     setCurrentStep((value) => value + 1);
   }
 
@@ -943,87 +1034,28 @@ export function BrandOnboardingShell({
     setCurrentStep((value) => value - 1);
   }
 
-  if (submitted) {
-    return (
-      <section className="relative overflow-hidden px-4 pb-16 pt-8 md:px-6 md:pb-24 md:pt-10">
-        <div className="mx-auto max-w-6xl">
-          <div className="rounded-[2rem] border border-white/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.94),rgba(238,250,248,0.92))] p-8 shadow-[0_26px_80px_rgba(15,23,42,0.12)] backdrop-blur-sm md:p-12">
-            <div className="mx-auto max-w-3xl text-center">
-              <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-slate-950 text-white shadow-[0_14px_34px_rgba(15,23,42,0.16)]">
-                <Sparkles className="size-7" />
-              </div>
-              <p className="mt-6 text-sm font-semibold uppercase tracking-[0.28em] text-teal-700">
-                {copy.successBadge}
-              </p>
-              <h1 className="mt-4 text-5xl font-semibold tracking-tight text-slate-950 md:text-6xl">
-                {copy.successTitle}
-              </h1>
-              <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-slate-600">
-                {copy.successDescription}
-              </p>
-            </div>
-
-            <div className="mt-10 grid gap-4 md:grid-cols-3">
-              <div className="rounded-[1.4rem] border border-white/85 bg-white/88 p-5">
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-                  {copy.companySummary}
-                </p>
-                <p className="mt-3 text-2xl font-semibold text-slate-950">
-                  {formData.companyName}
-                </p>
-                <p className="mt-1 text-base text-slate-600">
-                  {formData.productType}
-                </p>
-              </div>
-              <div className="rounded-[1.4rem] border border-white/85 bg-white/88 p-5">
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-                  {copy.campaignTypeSummary}
-                </p>
-                <p className="mt-3 text-2xl font-semibold text-slate-950">
-                  {copy.campaignTypes.find((type) => type.id === formData.campaignType)?.label}
-                </p>
-                <p className="mt-1 text-base text-slate-600">
-                  ${formData.budgetMin} to ${formData.budgetMax} per post
-                </p>
-              </div>
-              <div className="rounded-[1.4rem] border border-white/85 bg-white/88 p-5">
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-                  {copy.targetingSummary}
-                </p>
-                <p className="mt-3 text-2xl font-semibold text-slate-950">
-                  {formData.creatorSlots} spot{formData.creatorSlots === "1" ? "" : "s"}
-                </p>
-                <p className="mt-1 text-base text-slate-600">
-                  {formData.creatorNiches.slice(0, 3).join(", ")}
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-8 flex justify-center">
-              <button
-                type="button"
-                onClick={() => {
-                  setSubmitted(false);
-                  setCurrentStep(0);
-                }}
-                className="inline-flex h-14 items-center justify-center rounded-[1rem] bg-slate-950 px-6 text-base font-semibold text-white transition-colors hover:bg-slate-800"
-              >
-                {copy.reviewAgain}
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section className="relative overflow-hidden px-4 pb-16 pt-8 md:px-6 md:pb-24 md:pt-10">
       <div className="absolute left-[-6rem] top-20 h-56 w-56 rounded-full bg-teal-200/25 blur-3xl" />
       <div className="absolute right-[-4rem] top-14 h-64 w-64 rounded-full bg-sky-200/30 blur-3xl" />
 
       <div className="mx-auto max-w-5xl">
-        <div className="rounded-[2rem] border border-white/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.94),rgba(248,252,255,0.9))] p-5 shadow-[0_26px_80px_rgba(15,23,42,0.12)] backdrop-blur-sm md:p-8">
+        <form
+          action={saveBrandOnboardingAction}
+          onSubmit={(event) => {
+            if (currentStep !== localizedSteps.length - 1) {
+              event.preventDefault();
+              handleNext();
+              return;
+            }
+
+            if (!validateStep(currentStep)) {
+              event.preventDefault();
+            }
+          }}
+          className="rounded-[2rem] border border-white/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.94),rgba(248,252,255,0.9))] p-5 shadow-[0_26px_80px_rgba(15,23,42,0.12)] backdrop-blur-sm md:p-8"
+        >
+          <FormHiddenInputs locale={locale} formData={formData} />
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">
@@ -1651,16 +1683,20 @@ export function BrandOnboardingShell({
               <ArrowLeft className="size-4" />
               {copy.back}
             </button>
-            <button
-              type="button"
-              onClick={handleNext}
-              className="inline-flex h-14 items-center justify-center gap-2 rounded-[1rem] bg-slate-950 px-6 text-base font-semibold text-white transition-colors hover:bg-slate-800"
-            >
-              {currentStep === localizedSteps.length - 1 ? copy.createCampaign : copy.next}
-              {currentStep === localizedSteps.length - 1 ? null : <ArrowRight className="size-4" />}
-            </button>
+            {currentStep === localizedSteps.length - 1 ? (
+              <FinalSubmitButton label={copy.createCampaign} pendingLabel={copy.submitting} />
+            ) : (
+              <button
+                type="button"
+                onClick={handleNext}
+                className="inline-flex h-14 items-center justify-center gap-2 rounded-[1rem] bg-slate-950 px-6 text-base font-semibold text-white transition-colors hover:bg-slate-800"
+              >
+                {copy.next}
+                <ArrowRight className="size-4" />
+              </button>
+            )}
           </div>
-        </div>
+        </form>
       </div>
     </section>
   );
