@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -10,6 +11,7 @@ type PricingCardProps = {
   description: string;
   features: string[];
   cta: string;
+  href?: string;
   featured?: boolean;
 };
 
@@ -21,8 +23,16 @@ export function PricingCard({
   description,
   features,
   cta,
+  href,
   featured = false,
 }: PricingCardProps) {
+  const ctaClassName = cn(
+    "inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border px-5 text-sm font-semibold transition-colors",
+    featured
+      ? "bg-slate-950 text-white hover:bg-slate-800"
+      : "bg-transparent text-slate-900 hover:bg-slate-100",
+  );
+
   return (
     <article
       className={cn(
@@ -65,18 +75,17 @@ export function PricingCard({
       </ul>
 
       <div className="mt-auto pt-8">
-        <button
-          type="button"
-          className={cn(
-            "inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border px-5 text-sm font-semibold transition-colors",
-            featured
-              ? "bg-slate-950 text-white hover:bg-slate-800"
-              : "bg-transparent text-slate-900 hover:bg-slate-100",
-          )}
-        >
-          {cta}
-          <ArrowRight className="size-4" />
-        </button>
+        {href ? (
+          <Link href={href} className={ctaClassName}>
+            {cta}
+            <ArrowRight className="size-4" />
+          </Link>
+        ) : (
+          <button type="button" className={ctaClassName}>
+            {cta}
+            <ArrowRight className="size-4" />
+          </button>
+        )}
       </div>
     </article>
   );

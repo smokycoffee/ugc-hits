@@ -28,6 +28,7 @@ export function PricingSection({ pricing }: PricingSectionProps) {
               description={plan.description}
               features={plan.features}
               cta={plan.cta}
+              href={plan.href}
               featured={plan.featured}
               popularLabel={pricing.popularLabel}
             />

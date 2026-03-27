@@ -74,6 +74,7 @@ export type LandingContent = {
       description: string;
       features: string[];
       cta: string;
+      href?: string;
       featured: boolean;
     }>;
   };
@@ -286,6 +287,7 @@ export async function getLandingContent(
       popularLabel: landing.pricing.popular,
       plans: landing.pricing.plans.map((plan, index) => ({
         ...plan,
+        href: index === 0 ? getStartedHref : undefined,
         featured: index === 0,
       })),
     },

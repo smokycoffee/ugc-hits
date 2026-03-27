@@ -79,7 +79,7 @@
       "plans": [
         {
           "name": "Sourcing twórców UGC",
-          "price": "399 PLN",
+          "price": "799 PLN",
           "cadence": "Jednorazowa opłata za kampanię",
           "description": "Dodaj jedną kampanię, otrzymuj kwalifikowane zgłoszenia z naszej zweryfikowanej sieci i kontaktuj się bezpośrednio z twórcami, z którymi chcesz działać dalej.",
           "features": [
@@ -268,7 +268,7 @@
           }
         ],
         "card": {
-          "title": "Uzyskaj dostęp dla marki",
+          "title": "Utwórz kampanię",
           "description": "Powiedz nam krótko o swojej firmie, żeby zacząć.",
           "fields": [
             {

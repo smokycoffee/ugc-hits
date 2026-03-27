@@ -79,7 +79,7 @@
       "plans": [
         {
           "name": "UGC Creator Sourcing",
-          "price": "399 PLN",
+          "price": "199 Euros",
           "cadence": "One-time listing fee",
           "description": "Post one campaign, receive qualified applicants from our vetted network, and connect directly with the creators you want to move forward with.",
           "features": [
@@ -268,7 +268,7 @@
           }
         ],
         "card": {
-          "title": "Apply for brand access",
+          "title": "Create a campaign",
           "description": "Tell us a bit about your company to get started.",
           "fields": [
             {
