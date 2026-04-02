@@ -18,14 +18,14 @@ export function FounderSection({ founder }: FounderSectionProps) {
           </h3>
           <p className="mt-2 text-sm text-slate-500">{founder.location}</p>
           <div className="mt-6 flex flex-wrap justify-center gap-2">
-            {founder.socials.map((social) => (
+            {/* {founder.socials.map((social) => (
               <span
                 key={social}
                 className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600"
               >
                 {social}
               </span>
-            ))}
+            ))} */}
           </div>
         </div>
 
