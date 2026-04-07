@@ -41,7 +41,7 @@ export default async function LocalizedHome({ params }: Props) {
         <MatchingSection matching={content.process.matching} />
         <PricingSection pricing={content.pricing} />
         <WhySection features={content.features} />
-        <FounderSection founder={content.founder} />
+        {/* <FounderSection founder={content.founder} /> */}
         <FaqSection faq={content.faq} />
       </main>
       <SiteFooter brand={content.brand} footer={content.footer} />
