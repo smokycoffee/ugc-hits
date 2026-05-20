@@ -24,6 +24,12 @@ export default async function AdminInvitesPage({ params }: Props) {
       actions={
         <div className="space-y-2">
           <a
+            href={`/${locale}/admin/enterprise-campaigns`}
+            className="inline-flex rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700"
+          >
+            Enterprise campaigns
+          </a>
+          <a
             href={`/${locale}/admin/matches`}
             className="inline-flex rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700"
           >

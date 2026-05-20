@@ -34,14 +34,22 @@ export default async function CreatorDashboardPage({
       description="Matched opportunities, application state, message alerts, and inbox updates are all driven from the same event pipeline."
       profileLabel={data.profile.email}
       actions={
-        <form action="/auth/signout" method="post">
-          <button
-            type="submit"
-            className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700"
+        <div className="space-y-2">
+          <a
+            href={`/${locale}/dashboard/creator/offers`}
+            className="inline-flex rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700"
           >
-            Sign out
-          </button>
-        </form>
+            Enterprise offers
+          </a>
+          <form action="/auth/signout" method="post">
+            <button
+              type="submit"
+              className="w-full rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700"
+            >
+              Sign out
+            </button>
+          </form>
+        </div>
       }
     >
       <RealtimeSync profileId={data.profile.id} />
